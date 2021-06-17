@@ -6,20 +6,20 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-#include "Renderer.h"
-#include "VertexBuffer.h"
-#include "VertexBufferLayout.h"
-#include "IndexBuffer.h"
-#include "VertexArray.h"
-#include "Shader.h"
-#include "Texture.h"
+#include "core/Renderer.h"
+#include "core/VertexBuffer.h"
+#include "core/VertexBufferLayout.h"
+#include "core/IndexBuffer.h"
+#include "core/VertexArray.h"
+#include "core/Shader.h"
+#include "core/Texture.h"
 
-#include "glm/glm.hpp"
-#include "glm/gtc/matrix_transform.hpp"
+#include "deps/glm/glm.hpp"
+#include "deps/glm/gtc/matrix_transform.hpp"
 
-#include "ImGUI/imgui.h"
-#include "ImGUI/imgui_impl_glfw.h"
-#include "ImGUI/imgui_impl_opengl3.h"
+#include "deps/imgui/imgui.h"
+#include "deps/imgui/imgui_impl_glfw.h"
+#include "deps/imgui/imgui_impl_opengl3.h"
 
 #include "tests/Test.h"
 #include "tests/TestClearColor.h"

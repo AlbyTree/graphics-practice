@@ -1,9 +1,9 @@
 #include "TestTexture2D.h"
-#include "Renderer.h"
+#include "../core/Renderer.h"
 
-#include "imgui/imgui.h"
-#include "glm/glm.hpp"
-#include "glm/gtc/matrix_transform.hpp"
+#include "../deps/imgui/imgui.h"
+#include "../deps/glm/glm.hpp"
+#include "../deps/glm/gtc/matrix_transform.hpp"
 
 namespace test
 {
@@ -43,11 +43,11 @@ namespace test
         m_VAO->AddBuffer(*m_VertexBuffer, vbLayout);
         m_IndexBuffer = std::make_unique<IndexBuffer>(indices, 6);
 
-        m_Shader = std::make_unique<Shader>("res/shaders/Basic.shader");
+        m_Shader = std::make_unique<Shader>("repo/res/shaders/Basic.shader");
         m_Shader->Bind();
         m_Shader->SetUniform4f("u_Color", 0.2f, 0.3f, 0.8f, 1.0f);
 
-        m_Texture = std::make_unique<Texture>("res/textures/ChernoLogo.png");
+        m_Texture = std::make_unique<Texture>("repo/res/textures/ChernoLogo.png");
         m_Shader->SetUniform1i("u_Texture", 0);
 	}
 
