@@ -3,7 +3,7 @@
 #include <string>
 #include <unordered_map>
 
-#include "glm/glm.hpp"
+#include "../deps/glm/glm.hpp"
 
 // Contains the vertex and fragment source code of a shader program as two strings.
 struct ShaderProgramSource
