@@ -7,8 +7,9 @@
 
 namespace test
 {
-	TestPerspProjSteps::TestPerspProjSteps()
-        : m_Proj(glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f)), 
+	TestPerspProjSteps::TestPerspProjSteps(const glm::vec3& point_e, float l, float r, float t, float b, float n, float f)
+        : m_point_e(point_e), m_l(l), m_r(r), m_t(t), m_b(b), m_n(n), m_f(f),
+        m_Proj(glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f)), 
         m_View(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f))), 
         m_TranslationA(glm::vec3(200.0f, 200.0f, 0.0f)), 
         m_TranslationB(glm::vec3(400.0f, 200.0f, 0.0f))
@@ -94,4 +95,33 @@ namespace test
         ImGui::SliderFloat3("Translation B", &m_TranslationB.x, 0.0f, 960.0f);
         ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 	}
+
+    void TestPerspProjSteps::ProjectPointToNearPlane()
+    {
+        m_point_p.x = (m_n * m_point_e.x) / (-m_point_e.z);
+        m_point_p.y = (m_n * m_point_e.y) / (-m_point_e.z);
+        m_point_p.z = m_n;
+    }
+
+    void TestPerspProjSteps::MapPointToClipSpace()
+    {
+        m_point_c.x = ((2 * m_point_p.x) / (m_r - m_l)) - ((m_r + m_l) / (m_r - m_l));
+        m_point_c.y = ((2 * m_point_p.y) / (m_t - m_b)) - ((m_t + m_b) / (m_t - m_b));
+        m_point_c.z = ((((m_f+m_n)/(m_f-m_n))*(-m_point_e.z))-((2*m_f*m_n)/(m_f-m_n)))/(-m_point_e.z);
+        m_point_c.w = m_point_e.z;
+    }
+
+    void TestPerspProjSteps::NDCTransf()
+    {
+        m_point_NDC.x = m_point_c.x / m_point_c.w;
+        m_point_NDC.y = m_point_c.y / m_point_c.w;
+        m_point_NDC.z = m_point_c.z / m_point_c.w;
+    }
+
+    void TestPerspProjSteps::ProjectPoint()
+    {
+        ProjectPointToNearPlane();
+        MapPointToClipSpace();
+        NDCTransf();
+    }
 }
