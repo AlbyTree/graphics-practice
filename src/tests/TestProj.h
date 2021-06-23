@@ -13,7 +13,7 @@ namespace test
 	class TestPerspProjSteps : public Test
 	{
 	public:
-		TestPerspProjSteps(const glm::vec3& point_e, float l, float r, float t, float b, float n, float f);
+		TestPerspProjSteps();
 		~TestPerspProjSteps();
 
 		void OnUpdate(float deltaTime) override;

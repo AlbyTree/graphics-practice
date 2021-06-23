@@ -7,12 +7,12 @@
 
 namespace test
 {
-	TestPerspProjSteps::TestPerspProjSteps(const glm::vec3& point_e, float l, float r, float t, float b, float n, float f)
-        : m_point_e(point_e), m_l(l), m_r(r), m_t(t), m_b(b), m_n(n), m_f(f),
-        m_Proj(glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f)), 
-        m_View(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f))), 
-        m_TranslationA(glm::vec3(200.0f, 200.0f, 0.0f)), 
-        m_TranslationB(glm::vec3(400.0f, 200.0f, 0.0f))
+	TestPerspProjSteps::TestPerspProjSteps()
+        : m_point_e(glm::vec3(10.0f, 10.0f, -5.0f)), 
+			m_l(-50.0f), m_r(50.0f), 
+			m_t(25.0f), m_b(-25.0f), 
+			m_n(-2.0f), m_f(-10.0f),
+			m_point_p(glm::vec3()), m_point_c(glm::vec4()), m_point_NDC(glm::vec3())
 	{
         float positions[] = {
             // 1st Triangle of square face
