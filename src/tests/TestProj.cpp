@@ -29,10 +29,20 @@ namespace test
 		GLCall(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
 		GLCall(glClear(GL_COLOR_BUFFER_BIT));
 
+        ProjectPointToNearPlane();
+        MapPointToClipSpace();
+        NDCTransf();
 	}
 
 	void TestPerspProjSteps::OnImGuiRenderer()
 	{
+        ImGui::Text("Eye Space Point: ");
+        ImGui::SliderFloat3("", &m_point_e.x, -100.0f, 100.0f);
+        ImGui::Text("PROJ PLANES PARAMS: \nl = %f r = %f \nt = %f b = %f \nn = %f f = %f",
+            m_l, m_r, m_t, m_b, m_n, m_f);
+        ImGui::Text("Projected Point: [%f,%f,%f]", m_point_p.x, m_point_p.y, m_point_p.z);
+        ImGui::Text("Clipped Point: [%f,%f,%f,%f]", m_point_c.x, m_point_c.y, m_point_c.z, m_point_c.w);
+        ImGui::Text("NDC Point: [%f,%f,%f]", m_point_NDC.x, m_point_NDC.y, m_point_NDC.z);
 	}
 
     void TestPerspProjSteps::ProjectPointToNearPlane()
