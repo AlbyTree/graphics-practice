@@ -28,7 +28,7 @@ void Renderer::Clear() const
 	GLCall(glClear(GL_COLOR_BUFFER_BIT));
 }
 
-void Renderer::Draw(const VertexArray& va, const IndexBuffer& ib, const Shader& shader) const
+void Renderer::Draw(const VertexArray& va, const IndexBuffer& ib, const Shader& shader, Primitive prim) const
 {
     shader.Bind();
 
@@ -37,5 +37,5 @@ void Renderer::Draw(const VertexArray& va, const IndexBuffer& ib, const Shader& 
 
 	// It draws what's bound to GL_ELEMENT_ARRAY_BUFFER
 	// otherwise I have to specify a pointer to an indices buffer
-	GLCall(glDrawElements(GL_TRIANGLES, ib.GetCount(), GL_UNSIGNED_INT, nullptr));
+	GLCall(glDrawElements(prim, ib.GetCount(), GL_UNSIGNED_INT, nullptr));
 }

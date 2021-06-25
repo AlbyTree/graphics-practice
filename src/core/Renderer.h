@@ -20,6 +20,9 @@
 	#define GLCall(x) x
 #endif
 
+// Primitives allowed are: TRIANGLES, POINTS .
+enum Primitive { TRIANGLES = GL_TRIANGLES, POINTS = GL_POINTS };
+
 // Clear all the OpenGL context errors flags.
 void GLClearError();
 // Tries to execute an OpenGL function: if the function execution produced errors,
@@ -36,5 +39,6 @@ private:
 
 public:
 	void Clear() const;
-	void Draw(const VertexArray& va, const IndexBuffer& ib, const Shader& shader) const;
+	// See the definition of the Primitive type to know what kind of primitives are allowed.
+	void Draw(const VertexArray& va, const IndexBuffer& ib, const Shader& shader, Primitive prim = TRIANGLES) const;
 };
