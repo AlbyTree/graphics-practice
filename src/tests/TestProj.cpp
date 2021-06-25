@@ -51,9 +51,9 @@ namespace test
         NDCTransf();
 
 		m_Shader->Bind();
-		m_Shader->SetUniform3f("u_NDCPos", m_point_NDC);
+		m_Shader->SetUniform3fv("u_NDCPos", 3, glm::value_ptr(m_point_NDC));
 
-		renderer.Draw(*m_VAO, *m_IndexBuffer, *m_Shader, GL_POINTS);
+		renderer.Draw(*m_VAO, *m_IndexBuffer, *m_Shader, POINTS);
 	}
 
 	void TestPerspProjSteps::OnImGuiRenderer()
