@@ -4,6 +4,7 @@
 #include "../deps/imgui/imgui.h"
 #include "../deps/glm/glm.hpp"
 #include "../deps/glm/gtc/matrix_transform.hpp"
+#include "../deps/glm/gtc/type_ptr.hpp"
 
 namespace test
 {
@@ -14,6 +15,20 @@ namespace test
 			m_n(-2.0f), m_f(-10.0f),
 			m_point_p(glm::vec3()), m_point_c(glm::vec4()), m_point_NDC(glm::vec3())
 	{
+        unsigned int indices[] = {0};
+
+        GLCall(glEnable(GL_PROGRAM_POINT_SIZE));
+
+        m_VAO = std::make_unique<VertexArray>();
+        m_VertexBuffer = std::make_unique<VertexBuffer>(glm::value_ptr(m_point_NDC), sizeof(float));
+
+        VertexBufferLayout vbLayout;
+        vbLayout.Push<float>(3);
+
+        m_VAO->AddBuffer(*m_VertexBuffer, vbLayout);
+        m_IndexBuffer = std::make_unique<IndexBuffer>(indices, 1);
+
+        m_Shader = std::make_unique<Shader>("res/shaders/PerspProjSteps.shader");
 	}
 
 	TestPerspProjSteps::~TestPerspProjSteps()
@@ -29,9 +44,16 @@ namespace test
 		GLCall(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
 		GLCall(glClear(GL_COLOR_BUFFER_BIT));
 
+        Renderer renderer;
+
         ProjectPointToNearPlane();
         MapPointToClipSpace();
         NDCTransf();
+
+		m_Shader->Bind();
+		m_Shader->SetUniform3f("u_NDCPos", m_point_NDC);
+
+		renderer.Draw(*m_VAO, *m_IndexBuffer, *m_Shader, GL_POINTS);
 	}
 
 	void TestPerspProjSteps::OnImGuiRenderer()
