@@ -38,6 +38,8 @@ public:
 	void SetUniform1i(const std::string& name, int value);
 	void SetUniform1f(const std::string& name, float value);
 	void SetUniform4f(const std::string& name, float v0, float v1, float f2, float f3);
+	// count specifies the number of elements that are to be modified.
+	void SetUniform3fv(const std::string& name, unsigned int count, const float* arr);
 	void SetUniformMat4f(const std::string& name, glm::mat4& matrix);
 
 

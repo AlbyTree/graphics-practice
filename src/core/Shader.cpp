@@ -137,6 +137,11 @@ void Shader::SetUniform4f(const std::string& name, float v0, float v1, float v2,
     GLCall(glUniform4f(GetUniformLocation(name), v0, v1, v2, v3));
 }
 
+void Shader::SetUniform3fv(const std::string& name, unsigned int count, const float* arr)
+{
+    GLCall(glUniform3fv(GetUniformLocation(name), count, arr));
+}
+
 void Shader::SetUniformMat4f(const std::string& name, glm::mat4& matrix)
 {
     // We pass 1 matrix that's already in column order so GL_FALSE for transposing:
