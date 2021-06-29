@@ -16,7 +16,7 @@ An application with this code requires:
 
 Add to the compiler include directories:
 - The GLEW and GLFW header files folders
-- The `deps\glm` folder
+- The `src\deps` folder
 
 Add to the compiler library directories:
 - The GLEW and GLFW static libraries folders
