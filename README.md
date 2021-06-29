@@ -2,7 +2,7 @@ The starting code is based on the work of the [OpenGL series](https://www.youtub
 The current repo structure is fairly simple:
 - `res` folder contains shader source files and texture files
 - `src/core` folder contains the main code needed to create a simple application
-- `src/deps` folder contains all the external dependencies (libraries, headers, ...) needed for building an application
+- `src/deps` folder contains some external dependencies (libraries, headers, ...) needed for building an application
 - `src/tests` folder contains personal experiments to test graphics concepts
 
 ### How to build
@@ -16,13 +16,15 @@ An application with this code requires:
 
 Add to the compiler include directories:
 - The GLEW and GLFW header files folders
-- The `deps\glm` folder
+- The `src\deps` folder
 
 Add to the compiler library directories:
 - The GLEW and GLFW static libraries folders
 
 Add to the linker input files the libraries:
 - `opengl32, glfw3, glew32s`
+
+The application will search the shaders and textures inside the `res` folder from the current working directory: if the application crashes, try to set the working directory to where you cloned the repository (for example, I have set my working directory in Visual Studio to `$(ProjectDir)\repo` where `repo` is where I have cloned this repository); otherwise, copy the `res` folder in your current working directory.
 
 ### Results
 > Work in progress...
