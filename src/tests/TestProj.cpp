@@ -9,10 +9,10 @@
 namespace test
 {
 	TestPerspProjSteps::TestPerspProjSteps()
-        : m_point_e(glm::vec3(10.0f, 10.0f, -5.0f)), 
-			m_l(-50.0f), m_r(50.0f), 
-			m_t(25.0f), m_b(-25.0f), 
-			m_n(-2.0f), m_f(-10.0f),
+        : m_point_e(glm::vec3(0.0f, 0.0f, -2.0f)), 
+			m_l(-470.0f), m_r(470.0f), 
+			m_t(270.0f), m_b(-270.0f), 
+			m_n(-1.0f), m_f(-5.0f),
 			m_point_p(glm::vec3()), m_point_c(glm::vec4()), m_point_NDC(glm::vec3())
 	{
         unsigned int indices[] = {0};
@@ -59,7 +59,7 @@ namespace test
 	void TestPerspProjSteps::OnImGuiRenderer()
 	{
         ImGui::Text("Eye Space Point: ");
-        ImGui::SliderFloat3("", &m_point_e.x, -100.0f, 100.0f);
+        ImGui::SliderFloat3("", &m_point_e.x, -1000.0f, 1000.0f);
         ImGui::Text("PROJ PLANES PARAMS: \nl = %f r = %f \nt = %f b = %f \nn = %f f = %f",
             m_l, m_r, m_t, m_b, m_n, m_f);
         ImGui::Text("Projected Point: [%f,%f,%f]", m_point_p.x, m_point_p.y, m_point_p.z);
