@@ -24,5 +24,7 @@ Add to the compiler library directories:
 Add to the linker input files the libraries:
 - `opengl32, glfw3, glew32s`
 
+The application will search the shaders and textures inside the `res` folder from the current working directory: if the application crashes, try to set the working directory to where you cloned the repository (for example, I have set my working directory in Visual Studio to `$(ProjectDir)\repo` where `repo` is where I have cloned this repository); otherwise, copy the `res` folder in your current working directory.
+
 ### Results
 > Work in progress...
