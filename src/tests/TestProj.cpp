@@ -20,7 +20,7 @@ namespace test
         GLCall(glEnable(GL_PROGRAM_POINT_SIZE));
 
         m_VAO = std::make_unique<VertexArray>();
-        m_VertexBuffer = std::make_unique<VertexBuffer>(glm::value_ptr(m_point_NDC), sizeof(float));
+        m_VertexBuffer = std::make_unique<VertexBuffer>(glm::value_ptr(m_point_NDC), 3*sizeof(float));
 
         VertexBufferLayout vbLayout;
         vbLayout.Push<float>(3);
