@@ -99,7 +99,7 @@ namespace test
     {
         m_point_c.x = ((2 * m_n * m_point_e.x) / (m_r - m_l)) + (((m_r + m_l) / (m_r - m_l))*m_point_e.z);
         m_point_c.y = ((2 * m_n * m_point_e.y) / (m_t - m_b)) + (((m_t + m_b) / (m_t - m_b))*m_point_e.z);
-        m_point_c.z = ((((m_f + m_n) / (m_f - m_n)) * (-m_point_e.z)) - ((2 * m_f * m_n) / (m_f - m_n)));
+        m_point_c.z = (((m_f + m_n) / (m_f - m_n)) * (-m_point_e.z)) - ((2 * m_f * m_n) / (m_f - m_n));
         m_point_c.w = -m_point_e.z;
     }
 
