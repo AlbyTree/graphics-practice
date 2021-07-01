@@ -59,9 +59,30 @@ namespace test
 	void TestPerspProjSteps::OnImGuiRenderer()
 	{
         ImGui::Text("Eye Space Point: ");
-        ImGui::SliderFloat3("", &m_point_e.x, -1000.0f, 1000.0f);
-        ImGui::Text("PROJ PLANES PARAMS: \nl = %f r = %f \nt = %f b = %f \nn = %f f = %f",
-            m_l, m_r, m_t, m_b, m_n, m_f);
+        ImGui::SliderFloat2("x,y coordinates", &m_point_e.x, -1000.0f, 1000.0f);
+        ImGui::PushItemWidth(120.0f);
+        ImGui::InputFloat("z coordinate", &m_point_e.z, 0.05f);
+
+        ImGui::Text("PROJ PLANES PARAMS: \n");
+
+        ImGui::PushItemWidth(120.0f);
+        ImGui::InputFloat("left,", &m_l, 0.05f);
+        ImGui::SameLine();
+        ImGui::PushItemWidth(120.0f);
+        ImGui::InputFloat("right", &m_r, 0.05f);
+
+        ImGui::PushItemWidth(120.0f);
+        ImGui::InputFloat("top,", &m_t, 0.05f);
+        ImGui::SameLine();
+        ImGui::PushItemWidth(120.0f);
+        ImGui::InputFloat("bottom", &m_b, 0.05f);
+
+        ImGui::PushItemWidth(120.0f);
+        ImGui::InputFloat("near,", &m_n, 0.05f);
+        ImGui::SameLine();
+        ImGui::PushItemWidth(120.0f);
+        ImGui::InputFloat("far", &m_f, 0.05f);
+
         ImGui::Text("Projected Point: [%f,%f,%f]", m_point_p.x, m_point_p.y, m_point_p.z);
         ImGui::Text("Clipped Point: [%f,%f,%f,%f]", m_point_c.x, m_point_c.y, m_point_c.z, m_point_c.w);
         ImGui::Text("NDC Point: [%f,%f,%f]", m_point_NDC.x, m_point_NDC.y, m_point_NDC.z);
