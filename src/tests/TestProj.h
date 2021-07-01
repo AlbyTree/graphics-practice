@@ -37,7 +37,8 @@ namespace test
 		glm::vec4 m_point_c;
 		glm::vec3 m_point_NDC;
 
-		// Perspective projection planes parameters
+		// Perspective projection planes parameters:
+		// the near and far plane parameters MUST be positive values
 		float m_l, m_r, m_t, m_b, m_n, m_f;
 
 		std::unique_ptr<VertexArray> m_VAO;

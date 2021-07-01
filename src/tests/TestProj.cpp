@@ -12,7 +12,7 @@ namespace test
         : m_point_e(glm::vec3(0.0f, 0.0f, -2.0f)), 
 			m_l(-470.0f), m_r(470.0f), 
 			m_t(270.0f), m_b(-270.0f), 
-			m_n(-1.0f), m_f(-5.0f),
+			m_n(1.0f), m_f(5.0f),
 			m_point_p(glm::vec3()), m_point_c(glm::vec4()), m_point_NDC(glm::vec3())
 	{
         unsigned int indices[] = {0};
