@@ -66,16 +66,16 @@ namespace test
         ImGui::Text("PROJ PLANES PARAMS: \n");
 
         ImGui::PushItemWidth(120.0f);
-        ImGui::InputFloat("left,", &m_l, 0.05f);
+        ImGui::InputFloat("left,", &m_l, 0.5f);
         ImGui::SameLine();
         ImGui::PushItemWidth(120.0f);
-        ImGui::InputFloat("right", &m_r, 0.05f);
+        ImGui::InputFloat("right", &m_r, 0.5f);
 
         ImGui::PushItemWidth(120.0f);
-        ImGui::InputFloat("top,", &m_t, 0.05f);
+        ImGui::InputFloat("top,", &m_t, 0.5f);
         ImGui::SameLine();
         ImGui::PushItemWidth(120.0f);
-        ImGui::InputFloat("bottom", &m_b, 0.05f);
+        ImGui::InputFloat("bottom", &m_b, 0.5f);
 
         ImGui::PushItemWidth(120.0f);
         ImGui::InputFloat("near,", &m_n, 0.05f);
