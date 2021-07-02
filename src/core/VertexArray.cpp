@@ -43,3 +43,9 @@ void VertexArray::AddBuffer(const VertexBuffer& vb, const VertexBufferLayout& la
 		offset += element.count * VertexBufferElement::GetSizeOfType(element.type);
 	}
 }
+
+void VertexArray::ReplaceBufferData(const void* data, unsigned int size) const
+{
+	GLCall(glBindVertexArray(m_RendererID));
+    GLCall(glBufferSubData(GL_ARRAY_BUFFER, 0, size, data));
+}

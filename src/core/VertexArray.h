@@ -22,4 +22,6 @@ public:
 	void Bind() const;
 	void Unbind() const;
 	void AddBuffer(const VertexBuffer& vb, const VertexBufferLayout& layout);
+	// Replace buffer data starting from the beginning of the buffer.
+	void ReplaceBufferData(const void* data, unsigned int size) const;
 };
