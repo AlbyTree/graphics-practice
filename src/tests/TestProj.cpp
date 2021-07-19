@@ -23,7 +23,7 @@ namespace test
         m_VertexBuffer = std::make_unique<VertexBuffer>(glm::value_ptr(m_point_NDC), 3*sizeof(float));
 
         VertexBufferLayout vbLayout;
-        vbLayout.Push<float>(3);
+        vbLayout.AddAttrib<float>(3);
 
         m_VAO->AddBuffer(*m_VertexBuffer, vbLayout, true);
         m_IndexBuffer = std::make_unique<IndexBuffer>(indices, 1);
