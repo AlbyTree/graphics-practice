@@ -24,7 +24,7 @@ void VertexArray::Unbind()
 		m_BufferState = NO_BUFFER;
 }
 
-void VertexArray::AddBuffer(const VertexBuffer& vb, const VertexBufferLayout& layout)
+void VertexArray::AddBuffer(const VertexBuffer& vb, const VertexBufferLayout& layout, bool isBufferInit)
 {
 	Bind();
 	vb.Bind();
@@ -44,6 +44,7 @@ void VertexArray::AddBuffer(const VertexBuffer& vb, const VertexBufferLayout& la
 			element.normalized, layout.GetStride(), (const void*)offset));
 		offset += element.count * VertexBufferElement::GetSizeOfType(element.type);
 	}
+	m_BufferState = (isBufferInit ? INIT_BUFFER : UNINIT_BUFFER);
 }
 
 void VertexArray::ReplaceBufferData(const void* data, unsigned int size)

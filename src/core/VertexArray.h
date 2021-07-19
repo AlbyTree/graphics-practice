@@ -22,8 +22,8 @@ public:
 	~VertexArray();
 
 	void Bind() const;
-	void AddBuffer(const VertexBuffer& vb, const VertexBufferLayout& layout);
 	void Unbind();
+	void AddBuffer(const VertexBuffer& vb, const VertexBufferLayout& layout, bool isBufferInit);
 	// Replace buffer data starting from the beginning of the buffer.
 	void ReplaceBufferData(const void* data, unsigned int size);
 	VABufferState GetBufferState() const;
