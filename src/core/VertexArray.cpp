@@ -5,6 +5,7 @@
 VertexArray::VertexArray()
 {
         GLCall(glGenVertexArrays(1, &m_RendererID));
+		m_BufferState = NO_BUFFER;
 }
 
 VertexArray::~VertexArray()
@@ -17,9 +18,10 @@ void VertexArray::Bind() const
         GLCall(glBindVertexArray(m_RendererID));
 }
 
-void VertexArray::Unbind() const
+void VertexArray::Unbind()
 {
         GLCall(glBindVertexArray(0));
+		m_BufferState = NO_BUFFER;
 }
 
 void VertexArray::AddBuffer(const VertexBuffer& vb, const VertexBufferLayout& layout)
@@ -44,8 +46,14 @@ void VertexArray::AddBuffer(const VertexBuffer& vb, const VertexBufferLayout& la
 	}
 }
 
-void VertexArray::ReplaceBufferData(const void* data, unsigned int size) const
+void VertexArray::ReplaceBufferData(const void* data, unsigned int size)
 {
 	GLCall(glBindVertexArray(m_RendererID));
     GLCall(glBufferSubData(GL_ARRAY_BUFFER, 0, size, data));
+	m_BufferState = INIT_BUFFER;
+}
+
+VABufferState VertexArray::GetBufferState() const
+{
+	return m_BufferState;
 }
