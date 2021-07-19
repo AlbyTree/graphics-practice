@@ -25,7 +25,7 @@ namespace test
         VertexBufferLayout vbLayout;
         vbLayout.Push<float>(3);
 
-        m_VAO->AddBuffer(*m_VertexBuffer, vbLayout);
+        m_VAO->AddBuffer(*m_VertexBuffer, vbLayout, true);
         m_IndexBuffer = std::make_unique<IndexBuffer>(indices, 1);
 
         m_Shader = std::make_unique<Shader>("res/shaders/PerspProjSteps.shader");
