@@ -9,6 +9,7 @@
 namespace test
 {
 	TestSendDataLater::TestSendDataLater()
+		: m_ShowWarningOnce(false)
 	{
 		unsigned int indices[] = { 0,1,2 };
 
@@ -19,7 +20,7 @@ namespace test
         VertexBufferLayout vbLayout;
         vbLayout.Push<float>(3);
 
-        m_VAO->AddBuffer(*m_VertexBuffer, vbLayout);
+        m_VAO->AddBuffer(*m_VertexBuffer, vbLayout, false);
         m_IndexBuffer = std::make_unique<IndexBuffer>(indices, sizeof(indices));
 
         m_Shader = std::make_unique<Shader>("res/shaders/SendDataLater.shader");
@@ -40,9 +41,21 @@ namespace test
 
         Renderer renderer;
 
-		m_Shader->Bind();
-		m_VAO->Bind();
-		renderer.Draw(*m_VAO, *m_IndexBuffer, *m_Shader);
+		if (m_VAO->GetBufferState() == NO_BUFFER ||
+			m_VAO->GetBufferState() == UNINIT_BUFFER)
+		{
+			if (!m_ShowWarningOnce)
+			{
+				std::cout << "WARNING: the current vertex array doesn't have associated a buffer OR has an uninitialized buffer!"
+					<< std::endl << "Refusing to draw..." << std::endl;
+				m_ShowWarningOnce = true;
+			}
+		}
+		else
+		{
+			renderer.Draw(*m_VAO, *m_IndexBuffer, *m_Shader);
+			m_ShowWarningOnce = false;
+		}
 	}
 
 	void TestSendDataLater::OnImGuiRenderer()
