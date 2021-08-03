@@ -10,11 +10,11 @@
 
 namespace test
 {
-	class TestPerspProjSteps : public Test
+	class TestProjSteps : public Test
 	{
 	public:
-		TestPerspProjSteps();
-		~TestPerspProjSteps();
+		TestProjSteps();
+		~TestProjSteps();
 
 		void OnUpdate(float deltaTime) override;
 		void OnRenderer() override;

@@ -1,4 +1,4 @@
-#include "TestProj.h"
+#include "TestProjSteps.h"
 #include "../core/Renderer.h"
 #include "../core/Utils.h"
 
@@ -9,7 +9,7 @@
 
 namespace test
 {
-    TestPerspProjSteps::TestPerspProjSteps()
+    TestProjSteps::TestProjSteps()
         : m_UpdatedData(),
         m_ProjectedData(), m_ClippedData(), m_NDCData(),
         m_r(470.0f), m_l(-470.0f),
@@ -31,18 +31,18 @@ namespace test
         m_VAO->AddBuffer(*m_VertexBuffer, vbLayout, true);
         m_IndexBuffer = std::make_unique<IndexBuffer>(indices, 3);
 
-        m_Shader = std::make_unique<Shader>("res/shaders/PerspProjSteps.shader");
+        m_Shader = std::make_unique<Shader>("res/shaders/ProjSteps.shader");
 	}
 
-	TestPerspProjSteps::~TestPerspProjSteps()
+	TestProjSteps::~TestProjSteps()
 	{
 	}
 
-	void TestPerspProjSteps::OnUpdate(float deltaTime)
+	void TestProjSteps::OnUpdate(float deltaTime)
 	{
 	}
 
-	void TestPerspProjSteps::OnRenderer()
+	void TestProjSteps::OnRenderer()
 	{
 		GLCall(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
 		GLCall(glClear(GL_COLOR_BUFFER_BIT));
@@ -84,7 +84,7 @@ namespace test
 		renderer.Draw(*m_VAO, *m_IndexBuffer, *m_Shader);
 	}
 
-	void TestPerspProjSteps::OnImGuiRenderer()
+	void TestProjSteps::OnImGuiRenderer()
 	{
         ImGui::SliderFloat("Translate X", &m_Translation.x, -20.0f, 20.0f);
         ImGui::SliderFloat("Translate Y", &m_Translation.y, -20.0f, 20.0f);
