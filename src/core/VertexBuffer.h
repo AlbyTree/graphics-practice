@@ -13,6 +13,8 @@ public:
 	// Creates a buffer on the GPU and immediatly transfer data into it.
 	// size is the amount of bytes that data will occupy in VRAM.
 	VertexBuffer(const void* data, unsigned int size);
+	// Creates a buffer on the GPU with uninitialized data.
+	VertexBuffer(unsigned int size);
 	~VertexBuffer();
 
 	// Bind the buffer to GL_ARRAY_BUFFER .

@@ -37,10 +37,10 @@ namespace test
         m_VertexBuffer = std::make_unique<VertexBuffer>(positions, 4 * 4 * sizeof(float));
         VertexBufferLayout vbLayout;
         // Vertex Positions
-        vbLayout.Push<float>(2);
+        vbLayout.AddAttrib<float>(2);
         // Texture Positions
-        vbLayout.Push<float>(2);
-        m_VAO->AddBuffer(*m_VertexBuffer, vbLayout);
+        vbLayout.AddAttrib<float>(2);
+        m_VAO->AddBuffer(*m_VertexBuffer, vbLayout, true);
         m_IndexBuffer = std::make_unique<IndexBuffer>(indices, 6);
 
         m_Shader = std::make_unique<Shader>("res/shaders/Basic.shader");

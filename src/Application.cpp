@@ -25,6 +25,8 @@
 #include "tests/Test.h"
 #include "tests/TestClearColor.h"
 #include "tests/TestTexture2D.h"
+#include "tests/TestProjSteps.h"
+#include "tests/TestSendDataLater.h"
 
 int main(void)
 {
@@ -97,6 +99,8 @@ int main(void)
 
         testMenu->RegisterTest<test::TestClearColor>("Clear Color");
         testMenu->RegisterTest<test::TestTexture2D>("Texture 2D");
+        testMenu->RegisterTest<test::TestProjSteps>("Projection Steps");
+        testMenu->RegisterTest<test::TestSendDataLater>("Send Data Later");
 
         //test::TestClearColor test;
 
