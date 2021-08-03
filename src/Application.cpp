@@ -102,8 +102,6 @@ int main(void)
         testMenu->RegisterTest<test::TestProjSteps>("Projection Steps");
         testMenu->RegisterTest<test::TestSendDataLater>("Send Data Later");
 
-        //test::TestClearColor test;
-
         while (!glfwWindowShouldClose(window))
         {
             GLCall(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
