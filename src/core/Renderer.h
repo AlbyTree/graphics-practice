@@ -21,7 +21,7 @@
 #endif
 
 // Primitives allowed are: TRIANGLES, POINTS .
-enum Primitive { TRIANGLES = GL_TRIANGLES, POINTS = GL_POINTS };
+enum Primitive { TRIANGLES = GL_TRIANGLES, POINTS = GL_POINTS, LINE_STRIP = GL_LINE_STRIP, LINES = GL_LINES };
 
 // Clear all the OpenGL context errors flags.
 void GLClearError();
