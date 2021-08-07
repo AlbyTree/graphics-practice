@@ -89,9 +89,9 @@ namespace test
 		m_UpdatedPointsOnCurve = std::vector<glm::vec3>();
 		m_UpdatedControlPoints = std::vector<glm::vec3>();
 		for (int i = 0; i < m_CurvePoints.size(); i++)
-			m_UpdatedPointsOnCurve.push_back(MVP * glm::vec4(m_CurvePoints[i], 1.0f));
+			m_UpdatedPointsOnCurve.push_back(Model * glm::vec4(m_CurvePoints[i], 1.0f));
 		for (int i = 0; i < m_ControlPoints.size(); i++)
-			m_UpdatedControlPoints.push_back(MVP * glm::vec4(m_ControlPoints[i], 1.0f));
+			m_UpdatedControlPoints.push_back(Model * glm::vec4(m_ControlPoints[i], 1.0f));
 
 		m_Shader->SetUniformMat4f("u_MVP", MVP);
 
