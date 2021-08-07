@@ -10,7 +10,7 @@ namespace test
 {
 	TestBezCurve::TestBezCurve()
 		: m_NumSegments(100),
-		m_resize_factor(200), m_translate(0.0f),
+		m_resize_factor(200), m_translate(0.0f), m_curve_width(2.0f),
 		m_ShowCurvePoints(false), m_ControlPoints(false)
 	{
 		m_ControlPoints.push_back(glm::vec3(-0.5f, -0.5f, 0.0f));
@@ -63,6 +63,9 @@ namespace test
 		GLCall(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
 		GLCall(glClear(GL_COLOR_BUFFER_BIT));
         GLCall(glEnable(GL_PROGRAM_POINT_SIZE));
+		// Anti-aliasing for line primitive
+        GLCall(glEnable(GL_LINE_SMOOTH));
+        GLCall(glLineWidth(m_curve_width));
 
         Renderer renderer;
 		m_Shader->Bind();
@@ -107,6 +110,7 @@ namespace test
 		ImGui::SliderFloat("Resize", &m_resize_factor, -2000.0f, 2000.0f);
 		ImGui::SliderFloat("Move X", &m_translate.x, -1000.0f, 1000.0f);
 		ImGui::SliderFloat("Move Y", &m_translate.y, -1000.0f, 1000.0f);
+		ImGui::InputFloat("Curve width", &m_curve_width, 0.1f);
 
 		ImGui::SliderFloat("Move CP1 X", &m_ControlPoints[0].x, -10.0f, 10.0f);
 		ImGui::SliderFloat("Move CP1 Y", &m_ControlPoints[0].y, -10.0f, 10.0f);

@@ -35,6 +35,7 @@ namespace test
 
 		float m_resize_factor;
 		glm::vec3 m_translate;
+		float m_curve_width;
 
 		std::vector<glm::vec3> m_UpdatedPointsOnCurve;
 		std::vector<glm::vec3> m_UpdatedControlPoints;
