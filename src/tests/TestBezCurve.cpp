@@ -25,9 +25,9 @@ namespace test
 		for (int i = 0; i < m_CurvePoints.size(); i++)
 			indicesCurvePoints.push_back(i);
 
-		// Curve points
+		// Curve points buffers
         m_VAO_CurvePoints = std::make_unique<VertexArray>();
-        m_VertexBuffer_CurvePoints = std::make_unique<VertexBuffer>(
+		m_VertexBuffer_CurvePoints = std::make_unique<VertexBuffer>(
 			m_CurvePoints.data(), 3*m_CurvePoints.size()*sizeof(float));
 
         VertexBufferLayout vbLayout;
@@ -37,7 +37,7 @@ namespace test
         m_IndexBuffer_CurvePoints = std::make_unique<IndexBuffer>(
 			indicesCurvePoints.data(), indicesCurvePoints.size());
 
-		// Control points
+		// Control points buffers
 		unsigned int indicesControlPoints[4] = { 0,1,2,3 };
 		
         m_VAO_ControlPoints = std::make_unique<VertexArray>();
@@ -75,6 +75,7 @@ namespace test
 		Model = Translate * Scale;
 		MVP = Projection * Model;
 
+		// If I changed one of the control points, re-compute the curve points
 		for (int i = 0; i < m_ControlPoints.size(); i++)
 		{
 			if (m_ControlPoints[i] != m_ControlPointsCopy[i])
@@ -84,7 +85,7 @@ namespace test
 			}
 		}
 
-		// Save vertices info application side
+		// Save info application side
 		m_UpdatedPointsOnCurve = std::vector<glm::vec3>();
 		m_UpdatedControlPoints = std::vector<glm::vec3>();
 		for (int i = 0; i < m_CurvePoints.size(); i++)
@@ -165,12 +166,11 @@ namespace test
 	{
 		m_NumSegments = numOfCurvePoints - 1;
 		m_CurvePoints = computePointOnCurveBez(m_NumSegments, m_ControlPoints[0], m_ControlPoints[1], m_ControlPoints[2], m_ControlPoints[3]);
-		// The number of indices depends on the number of points generated for the curve.
+
 		std::vector<unsigned int> indicesCurvePoints;
 		for (int i = 0; i < m_CurvePoints.size(); i++)
 			indicesCurvePoints.push_back(i);
 
-		// Curve points
 		m_VAO_CurvePoints.reset();
         m_VAO_CurvePoints = std::make_unique<VertexArray>();
 		m_VertexBuffer_CurvePoints.reset();
@@ -185,7 +185,7 @@ namespace test
         m_IndexBuffer_CurvePoints = std::make_unique<IndexBuffer>(
 			indicesCurvePoints.data(), indicesCurvePoints.size());
 	}
-	
+
 	std::vector<glm::vec3> TestBezCurve::computePointOnCurveBez(int numSegments, glm::vec3 P1, glm::vec3 P2, glm::vec3 P3, glm::vec3 P4)
 	{
 		std::vector<glm::vec3> curvePoints;
