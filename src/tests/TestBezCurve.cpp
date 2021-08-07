@@ -78,7 +78,7 @@ namespace test
 		Model = Translate * Scale;
 		MVP = Projection * Model;
 
-		// If I changed one of the control points, re-compute the curve points
+		// If I change one of the control points, re-compute the curve points
 		for (int i = 0; i < m_ControlPoints.size(); i++)
 		{
 			if (m_ControlPoints[i] != m_ControlPointsCopy[i])
