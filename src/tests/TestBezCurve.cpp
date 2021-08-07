@@ -9,7 +9,7 @@
 namespace test
 {
 	TestBezCurve::TestBezCurve()
-		: m_NumSegments(100),
+		: m_NumCurvePoints(100),
 		m_resize_factor(200), m_translate(0.0f), m_curve_width(2.0f),
 		m_ShowCurvePoints(false), m_ControlPoints(false)
 	{
@@ -19,7 +19,7 @@ namespace test
 		m_ControlPoints.push_back(glm::vec3(0.5f, -0.5f, 0.0f));
 		m_ControlPointsCopy = m_ControlPoints;
 
-		m_CurvePoints = generateCurvePointsBez(m_NumSegments, m_ControlPoints[0], m_ControlPoints[1], m_ControlPoints[2], m_ControlPoints[3]);
+		m_CurvePoints = generateCurvePointsBez(m_NumCurvePoints-1, m_ControlPoints[0], m_ControlPoints[1], m_ControlPoints[2], m_ControlPoints[3]);
 		// The number of indices depends on the number of points generated for the curve
 		std::vector<unsigned int> indicesCurvePoints;
 		for (int i = 0; i < m_CurvePoints.size(); i++)
@@ -88,6 +88,10 @@ namespace test
 			}
 		}
 
+		// If I change the number of curve points, compute the new curve points
+		if (m_NumCurvePoints != m_CurvePoints.size())
+			UpdateCurvePoints();
+
 		// Save info application side
 		m_UpdatedPointsOnCurve = std::vector<glm::vec3>();
 		m_UpdatedControlPoints = std::vector<glm::vec3>();
@@ -132,11 +136,7 @@ namespace test
 			}
 		}
 		
-		int numOfCurvePoints = m_NumSegments + 1;
-		ImGui::InputInt("Number of curve points", &numOfCurvePoints);
-		// If I change the number of curve points, compute the new curve points
-		if (numOfCurvePoints != m_NumSegments + 1)
-			UpdateCurveSegments(numOfCurvePoints);
+		ImGui::InputInt("Number of curve points", &m_NumCurvePoints);
 
 		if (ImGui::Button("Show Curve Points"))
 			m_ShowCurvePoints = m_ShowCurvePoints ? false : true;
@@ -153,7 +153,7 @@ namespace test
 
 	void TestBezCurve::UpdateCurveControlPoints()
 	{
-		m_CurvePoints = generateCurvePointsBez(m_NumSegments, m_ControlPoints[0], m_ControlPoints[1], m_ControlPoints[2], m_ControlPoints[3]);
+		m_CurvePoints = generateCurvePointsBez(m_NumCurvePoints-1, m_ControlPoints[0], m_ControlPoints[1], m_ControlPoints[2], m_ControlPoints[3]);
 
 		// We first need to bind the right vertex buffer before sending the data using the VAO!
 		m_VertexBuffer_CurvePoints->Bind();
@@ -166,10 +166,9 @@ namespace test
 		m_VAO_ControlPoints->ReplaceBufferData(m_ControlPoints.data(), 3 * m_ControlPoints.size() * sizeof(float));
 	}
 
-	void TestBezCurve::UpdateCurveSegments(int numOfCurvePoints)
+	void TestBezCurve::UpdateCurvePoints()
 	{
-		m_NumSegments = numOfCurvePoints - 1;
-		m_CurvePoints = generateCurvePointsBez(m_NumSegments, m_ControlPoints[0], m_ControlPoints[1], m_ControlPoints[2], m_ControlPoints[3]);
+		m_CurvePoints = generateCurvePointsBez(m_NumCurvePoints-1, m_ControlPoints[0], m_ControlPoints[1], m_ControlPoints[2], m_ControlPoints[3]);
 
 		std::vector<unsigned int> indicesCurvePoints;
 		for (int i = 0; i < m_CurvePoints.size(); i++)

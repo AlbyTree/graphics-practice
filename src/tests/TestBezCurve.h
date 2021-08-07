@@ -19,13 +19,13 @@ namespace test
 		void OnRenderer() override;
 		void OnImGuiRenderer() override;
 
-		void UpdateCurveSegments(int numOfCurvePoints);
+		void UpdateCurvePoints();
 		void UpdateCurveControlPoints();
 		std::vector<glm::vec3> generateCurvePointsBez(int numSegments, glm::vec3 P1, glm::vec3 P2, glm::vec3 P3, glm::vec3 P4);
 		
 	private:
 
-		int m_NumSegments;
+		int m_NumCurvePoints;
 		std::vector<glm::vec3> m_CurvePoints;
 		std::vector<glm::vec3> m_ControlPoints;
 		// Used for checking when the control points positions are changed
