@@ -26,10 +26,9 @@ namespace test
 	private:
 
 		int m_NumSegments;
-		// Bezier curve control points
-		glm::vec3 m_P1, m_P2, m_P3, m_P4;
 		std::vector<glm::vec3> m_CurvePoints;
 		std::vector<glm::vec3> m_ControlPoints;
+		// Used for checking when the control points positions are changed
 		std::vector<glm::vec3> m_ControlPointsCopy;
 		bool m_ShowCurvePoints;
 		bool m_ShowControlPoints;

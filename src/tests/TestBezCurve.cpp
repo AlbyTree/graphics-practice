@@ -10,22 +10,17 @@ namespace test
 {
 	TestBezCurve::TestBezCurve()
 		: m_NumSegments(100),
-		m_P1(glm::vec3(-0.5f, -0.5f, 0.0f)),
-		m_P2(glm::vec3(-0.2, 0.2f, 0.0f)),
-		m_P3(glm::vec3(0.12, 0.12, 0.0f)),
-		m_P4(glm::vec3(0.5f, -0.5f, 0.0f)),
 		m_resize_factor(200), m_translate(0.0f),
 		m_ShowCurvePoints(false), m_ControlPoints(false)
 	{
-		m_ControlPoints.push_back(m_P1);
-		m_ControlPoints.push_back(m_P2);
-		m_ControlPoints.push_back(m_P3);
-		m_ControlPoints.push_back(m_P4);
-		// Save control points if they are changed later
+		m_ControlPoints.push_back(glm::vec3(-0.5f, -0.5f, 0.0f));
+		m_ControlPoints.push_back(glm::vec3(-0.2, 0.2f, 0.0f));
+		m_ControlPoints.push_back(glm::vec3(0.12, 0.12, 0.0f));
+		m_ControlPoints.push_back(glm::vec3(0.5f, -0.5f, 0.0f));
 		m_ControlPointsCopy = m_ControlPoints;
 
-		m_CurvePoints = computePointOnCurveBez(m_NumSegments, m_P1, m_P2, m_P3, m_P4);
-		// The number of indices depends on the number of points generated for the curve.
+		m_CurvePoints = computePointOnCurveBez(m_NumSegments, m_ControlPoints[0], m_ControlPoints[1], m_ControlPoints[2], m_ControlPoints[3]);
+		// The number of indices depends on the number of points generated for the curve
 		std::vector<unsigned int> indicesCurvePoints;
 		for (int i = 0; i < m_CurvePoints.size(); i++)
 			indicesCurvePoints.push_back(i);
