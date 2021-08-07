@@ -155,39 +155,15 @@ namespace test
 	{
 		m_CurvePoints = computePointOnCurveBez(m_NumSegments, m_ControlPoints[0], m_ControlPoints[1], m_ControlPoints[2], m_ControlPoints[3]);
 
-		// Curve points
-		m_VAO_CurvePoints.reset();
-        m_VAO_CurvePoints = std::make_unique<VertexArray>();
-		m_VertexBuffer_CurvePoints.reset();
-        m_VertexBuffer_CurvePoints = std::make_unique<VertexBuffer>(
-			m_CurvePoints.data(), 3*m_CurvePoints.size()*sizeof(float));
-		// The number of indices depends on the number of points generated for the curve.
-		std::vector<unsigned int> indicesCurvePoints;
-		for (int i = 0; i < m_CurvePoints.size(); i++)
-			indicesCurvePoints.push_back(i);
+		// We first need to bind the right vertex buffer before sending the data using the VAO!
+		m_VertexBuffer_CurvePoints->Bind();
+		m_VAO_CurvePoints->ReplaceBufferData(m_CurvePoints.data(), 3 * m_CurvePoints.size() * sizeof(float));
 
-        VertexBufferLayout vbLayout;
-        vbLayout.AddAttrib<float>(3);
-
-        m_VAO_CurvePoints->AddBuffer(*m_VertexBuffer_CurvePoints, vbLayout, true);
-		m_IndexBuffer_CurvePoints.reset();
-        m_IndexBuffer_CurvePoints = std::make_unique<IndexBuffer>(
-			indicesCurvePoints.data(), indicesCurvePoints.size());
-
-		// Control points
 		// Save control points if they are changed later
 		m_ControlPointsCopy = m_ControlPoints;
-		unsigned int indicesControlPoints[4] = { 0,1,2,3 };
-		
-		m_VAO_ControlPoints.reset();
-        m_VAO_ControlPoints = std::make_unique<VertexArray>();
-		m_VertexBuffer_ControlPoints.reset();
-        m_VertexBuffer_ControlPoints = std::make_unique<VertexBuffer>(
-			m_ControlPoints.data(), 3*m_ControlPoints.size()*sizeof(float));
 
-        m_VAO_ControlPoints->AddBuffer(*m_VertexBuffer_ControlPoints, vbLayout, true);
-		m_IndexBuffer_ControlPoints.reset();
-        m_IndexBuffer_ControlPoints = std::make_unique<IndexBuffer>(indicesControlPoints, 4);
+		m_VertexBuffer_ControlPoints->Bind();
+		m_VAO_ControlPoints->ReplaceBufferData(m_ControlPoints.data(), 3 * m_ControlPoints.size() * sizeof(float));
 	}
 
 	void TestBezCurve::UpdateCurveSegments(int numOfCurvePoints)
