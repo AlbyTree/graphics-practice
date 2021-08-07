@@ -21,7 +21,7 @@ namespace test
 
 		void UpdateCurvePoints();
 		void UpdateCurveControlPoints();
-		std::vector<glm::vec3> generateCurvePointsBez(int numSegments, glm::vec3 P1, glm::vec3 P2, glm::vec3 P3, glm::vec3 P4);
+		std::vector<glm::vec3> generateCurvePointsBez(int numCurvePoints, glm::vec3 CP1, glm::vec3 CP2, glm::vec3 CP3, glm::vec3 CP4);
 		
 	private:
 

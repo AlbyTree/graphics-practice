@@ -19,7 +19,7 @@ namespace test
 		m_ControlPoints.push_back(glm::vec3(0.5f, -0.5f, 0.0f));
 		m_ControlPointsCopy = m_ControlPoints;
 
-		m_CurvePoints = generateCurvePointsBez(m_NumCurvePoints-1, m_ControlPoints[0], m_ControlPoints[1], m_ControlPoints[2], m_ControlPoints[3]);
+		m_CurvePoints = generateCurvePointsBez(m_NumCurvePoints, m_ControlPoints[0], m_ControlPoints[1], m_ControlPoints[2], m_ControlPoints[3]);
 		// The number of indices depends on the number of points generated for the curve
 		std::vector<unsigned int> indicesCurvePoints;
 		for (int i = 0; i < m_CurvePoints.size(); i++)
@@ -153,7 +153,7 @@ namespace test
 
 	void TestBezCurve::UpdateCurveControlPoints()
 	{
-		m_CurvePoints = generateCurvePointsBez(m_NumCurvePoints-1, m_ControlPoints[0], m_ControlPoints[1], m_ControlPoints[2], m_ControlPoints[3]);
+		m_CurvePoints = generateCurvePointsBez(m_NumCurvePoints, m_ControlPoints[0], m_ControlPoints[1], m_ControlPoints[2], m_ControlPoints[3]);
 
 		// We first need to bind the right vertex buffer before sending the data using the VAO!
 		m_VertexBuffer_CurvePoints->Bind();
@@ -168,7 +168,7 @@ namespace test
 
 	void TestBezCurve::UpdateCurvePoints()
 	{
-		m_CurvePoints = generateCurvePointsBez(m_NumCurvePoints-1, m_ControlPoints[0], m_ControlPoints[1], m_ControlPoints[2], m_ControlPoints[3]);
+		m_CurvePoints = generateCurvePointsBez(m_NumCurvePoints, m_ControlPoints[0], m_ControlPoints[1], m_ControlPoints[2], m_ControlPoints[3]);
 
 		std::vector<unsigned int> indicesCurvePoints;
 		for (int i = 0; i < m_CurvePoints.size(); i++)
@@ -189,9 +189,10 @@ namespace test
 			indicesCurvePoints.data(), indicesCurvePoints.size());
 	}
 
-	std::vector<glm::vec3> TestBezCurve::generateCurvePointsBez(int numSegments, glm::vec3 CP1, glm::vec3 CP2, glm::vec3 CP3, glm::vec3 CP4)
+	std::vector<glm::vec3> TestBezCurve::generateCurvePointsBez(int numCurvePoints, glm::vec3 CP1, glm::vec3 CP2, glm::vec3 CP3, glm::vec3 CP4)
 	{
 		std::vector<glm::vec3> curvePoints;
+		int numSegments = numCurvePoints - 1;
 		for (int i = 0; i <= numSegments; ++i) 
 		{
 			float t = i / (float)numSegments;
