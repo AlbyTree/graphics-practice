@@ -103,3 +103,24 @@ void compgraphutils::generateCurvePointsBez(int numCurvePoints, const glm::vec3*
 		curvePoints[i] = ((CPS[0] * k1 + CPS[1] * k2 + CPS[2] * k3 + CPS[3] * k4));
 	}
 }
+
+void compgraphutils::generateCurvePointsDecast(int numCurvePoints, const glm::vec3* CPS, std::vector<glm::vec3>& curvePoints)
+{
+	int numSegments = numCurvePoints - 1;
+	for (int i = 0; i <= numSegments; ++i)
+	{
+		float t = i / (float)numSegments;
+
+		// Compute first tree points along main segments P1-P2, P2-P3 and P3-P4
+		glm::vec3 CP12 = (1 - t) * CPS[0] + t * CPS[1];
+		glm::vec3 CP23 = (1 - t) * CPS[1] + t * CPS[2];
+		glm::vec3 CP34 = (1 - t) * CPS[2] + t * CPS[3];
+
+		// Compute two points along segments P1P2-P2P3 and P2P3-P3P4
+		glm::vec3 CP1223 = (1 - t) * CP12 + t * CP23;
+		glm::vec3 CP2334 = (1 - t) * CP23 + t * CP34;
+
+		// Finally compute P
+		curvePoints[i] = ((1 - t) * CP1223 + t * CP2334);
+	}
+}
