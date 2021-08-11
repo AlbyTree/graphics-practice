@@ -113,7 +113,9 @@ namespace test
 		}
 		if (m_ShowControlPoints)
 		{
+			GLCall(glLineWidth(1.0f));
 			m_Shader->SetUniform3fv("u_Color", 1, glm::value_ptr(glm::vec3(0.2f, 0.2f, 1.0f)));
+			renderer.Draw(*m_VAO_ControlPoints, *m_IndexBuffer_ControlPoints, *m_Shader, LINE_STRIP);
 			renderer.Draw(*m_VAO_ControlPoints, *m_IndexBuffer_ControlPoints, *m_Shader, POINTS);
 		}
 	}
