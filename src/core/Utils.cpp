@@ -1,6 +1,7 @@
 // The projection matrices and formulas are from http://www.songho.ca/opengl/gl_projectionmatrix.html
 
 #include "Utils.h"
+#include <vector>
 #include "../deps/glm/glm.hpp"
 
 glm::mat3 compgraphutils::CreateTrianglePositions()
@@ -84,4 +85,21 @@ glm::vec3 compgraphutils::NDCTransf(const glm::vec4 point_c)
 
 	return point_NDC;
 }
+
+void compgraphutils::generateCurvePointsBez(int numCurvePoints, const glm::vec3* CPS, std::vector<glm::vec3>& curvePoints)
+{
+	int numSegments = numCurvePoints - 1;
+	for (int i = 0; i <= numSegments; ++i)
+	{
+		float t = i / (float)numSegments;
+
+		// Compute coefficients
+		float k1 = (1 - t) * (1 - t) * (1 - t);
+		float k2 = 3 * (1 - t) * (1 - t) * t;
+		float k3 = 3 * (1 - t) * t * t;
+		float k4 = t * t * t;
+
+		// Weight the four control points using coefficients
+		curvePoints[i] = ((CPS[0] * k1 + CPS[1] * k2 + CPS[2] * k3 + CPS[3] * k4));
+	}
 }

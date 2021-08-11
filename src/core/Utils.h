@@ -2,6 +2,7 @@
 
 // The projection matrices and formulas are from http://www.songho.ca/opengl/gl_projectionmatrix.html
 
+#include <vector>
 #include "../deps/glm/glm.hpp"
 
 namespace compgraphutils
@@ -30,4 +31,8 @@ namespace compgraphutils
 		// Map a point from clip-space to NDC-space.
 		glm::vec3 NDCTransf(const glm::vec4 point_c);
 
+		// Generate points of a Bezier curve using 4 control points.
+		// CPS must have exactly 4 vectors.
+		// curvePoints must have exactly numCurvePoints size.
+		void generateCurvePointsBez(int numCurvePoints, const glm::vec3* CPS, std::vector<glm::vec3>& curvePoints);
 }
