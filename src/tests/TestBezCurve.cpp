@@ -34,6 +34,7 @@ namespace test
         vbLayout.AddAttrib<float>(3);
 
         m_VAO_CurvePoints->AddBuffer(*m_VertexBuffer_CurvePoints, vbLayout, true);
+
         m_IndexBuffer_CurvePoints = std::make_unique<IndexBuffer>(
 			indicesCurvePoints.data(), indicesCurvePoints.size());
 
@@ -45,6 +46,7 @@ namespace test
 			m_ControlPoints.data(), 3*m_ControlPoints.size()*sizeof(float));
 
         m_VAO_ControlPoints->AddBuffer(*m_VertexBuffer_ControlPoints, vbLayout, true);
+
         m_IndexBuffer_ControlPoints = std::make_unique<IndexBuffer>(indicesControlPoints, 4);
 
         m_Shader = std::make_unique<Shader>("res/shaders/BezCurve.shader");
@@ -102,11 +104,18 @@ namespace test
 
 		m_Shader->SetUniformMat4f("u_MVP", MVP);
 
+		m_Shader->SetUniform3fv("u_Color", 1, glm::value_ptr(glm::vec3(0.0f, 1.0f, 0.0f)));
 		renderer.Draw(*m_VAO_CurvePoints, *m_IndexBuffer_CurvePoints, *m_Shader, LINE_STRIP);
 		if (m_ShowCurvePoints)
+		{
+			m_Shader->SetUniform3fv("u_Color", 1, glm::value_ptr(glm::vec3(0.7, 0.0f, 0.0f)));
 			renderer.Draw(*m_VAO_CurvePoints, *m_IndexBuffer_CurvePoints, *m_Shader, POINTS);
+		}
 		if (m_ShowControlPoints)
+		{
+			m_Shader->SetUniform3fv("u_Color", 1, glm::value_ptr(glm::vec3(0.2f, 0.2f, 1.0f)));
 			renderer.Draw(*m_VAO_ControlPoints, *m_IndexBuffer_ControlPoints, *m_Shader, POINTS);
+		}
 	}
 
 	void TestBezCurve::OnImGuiRenderer()
