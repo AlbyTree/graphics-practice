@@ -1,5 +1,6 @@
 #include "TestBezCurve.h"
 #include "../core/Renderer.h"
+#include "../core/Utils.h"
 
 #include "../deps/imgui/imgui.h"
 #include "../deps/glm/glm.hpp"
@@ -9,8 +10,8 @@
 namespace test
 {
 	TestBezCurve::TestBezCurve()
-		: m_NumCurvePoints(100),
-		m_resize_factor(200), m_translate(0.0f), m_curve_width(2.0f),
+		: m_NumCurvePoints(100), m_CurvePoints(m_NumCurvePoints),
+		m_resize_factor(200), m_translate(0.0f), m_curve_width(2.0f), 
 		m_ShowCurvePoints(false), m_ControlPoints(false)
 	{
 		m_ControlPoints.push_back(glm::vec3(-0.5f, -0.5f, 0.0f));
@@ -19,7 +20,7 @@ namespace test
 		m_ControlPoints.push_back(glm::vec3(0.5f, -0.5f, 0.0f));
 		m_ControlPointsCopy = m_ControlPoints;
 
-		m_CurvePoints = generateCurvePointsBez(m_NumCurvePoints, m_ControlPoints[0], m_ControlPoints[1], m_ControlPoints[2], m_ControlPoints[3]);
+		compgraphutils::generateCurvePointsBez(m_NumCurvePoints, m_ControlPoints.data(), m_CurvePoints);
 		// The number of indices depends on the number of points generated for the curve
 		std::vector<unsigned int> indicesCurvePoints;
 		for (int i = 0; i < m_CurvePoints.size(); i++)
@@ -164,7 +165,7 @@ namespace test
 
 	void TestBezCurve::UpdateCurveControlPoints()
 	{
-		m_CurvePoints = generateCurvePointsBez(m_NumCurvePoints, m_ControlPoints[0], m_ControlPoints[1], m_ControlPoints[2], m_ControlPoints[3]);
+		compgraphutils::generateCurvePointsBez(m_NumCurvePoints, m_ControlPoints.data(), m_CurvePoints);
 
 		// We first need to bind the right vertex buffer before sending the data using the VAO!
 		m_VertexBuffer_CurvePoints->Bind();
@@ -179,7 +180,8 @@ namespace test
 
 	void TestBezCurve::UpdateCurvePoints()
 	{
-		m_CurvePoints = generateCurvePointsBez(m_NumCurvePoints, m_ControlPoints[0], m_ControlPoints[1], m_ControlPoints[2], m_ControlPoints[3]);
+		m_CurvePoints.resize(m_NumCurvePoints);
+		compgraphutils::generateCurvePointsBez(m_NumCurvePoints, m_ControlPoints.data(), m_CurvePoints);
 
 		std::vector<unsigned int> indicesCurvePoints;
 		for (int i = 0; i < m_CurvePoints.size(); i++)
@@ -198,26 +200,5 @@ namespace test
 		m_IndexBuffer_CurvePoints.reset();
         m_IndexBuffer_CurvePoints = std::make_unique<IndexBuffer>(
 			indicesCurvePoints.data(), indicesCurvePoints.size());
-	}
-
-	std::vector<glm::vec3> TestBezCurve::generateCurvePointsBez(int numCurvePoints, glm::vec3 CP1, glm::vec3 CP2, glm::vec3 CP3, glm::vec3 CP4)
-	{
-		std::vector<glm::vec3> curvePoints;
-		int numSegments = numCurvePoints - 1;
-		for (int i = 0; i <= numSegments; ++i) 
-		{
-			float t = i / (float)numSegments;
-
-			// Compute coefficients
-			float k1 = (1 - t) * (1 - t) * (1 - t);
-			float k2 = 3 * (1 - t) * (1 - t) * t;
-			float k3 = 3 * (1 - t) * t * t;
-			float k4 = t * t * t;
-
-			// Weight the four control points using coefficients
-			curvePoints.push_back((CP1 * k1 + CP2 * k2 + CP3 * k3 + CP4 * k4));
-		}
-
-		return curvePoints;
 	}
 }
