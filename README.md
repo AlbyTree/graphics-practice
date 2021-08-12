@@ -27,4 +27,8 @@ Add to the linker input files the libraries:
 The application will search the shaders and textures inside the `res` folder from the current working directory: if the application crashes, try to set the working directory to where you cloned the repository (for example, I have set my working directory in Visual Studio to `$(ProjectDir)\repo` where `repo` is where I have cloned this repository); otherwise, copy the `res` folder in your current working directory.
 
 ### Results
+- Smooth Bezier curve: you can move the control points to change the curve shape or increase/decrease the number of points used for the curve  
+
+https://user-images.githubusercontent.com/34436621/129155991-9959625e-2662-4065-afc7-8a862ce3c8ce.mp4
+
 > Work in progress...
