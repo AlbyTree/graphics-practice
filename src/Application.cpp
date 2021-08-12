@@ -27,6 +27,7 @@
 #include "tests/TestTexture2D.h"
 #include "tests/TestProjSteps.h"
 #include "tests/TestSendDataLater.h"
+#include "tests/TestBezCurve.h"
 
 int main(void)
 {
@@ -101,8 +102,7 @@ int main(void)
         testMenu->RegisterTest<test::TestTexture2D>("Texture 2D");
         testMenu->RegisterTest<test::TestProjSteps>("Projection Steps");
         testMenu->RegisterTest<test::TestSendDataLater>("Send Data Later");
-
-        //test::TestClearColor test;
+        testMenu->RegisterTest<test::TestBezCurve>("Bezier Curve");
 
         while (!glfwWindowShouldClose(window))
         {
