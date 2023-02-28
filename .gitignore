@@ -1,5 +1,8 @@
 /*
 
+!*.sln
+!*.vcxproj*
+
 !.gitignore
 !README.md
 

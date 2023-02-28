@@ -4,8 +4,8 @@
 
 #include "Test.h"
 
-#include "../core/VertexBuffer.h"
-#include "../core/VertexBufferLayout.h"
+#include "core/VertexBuffer.h"
+#include "core/VertexBufferLayout.h"
 
 namespace test
 {

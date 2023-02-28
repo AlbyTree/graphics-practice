@@ -1,22 +1,12 @@
 #include <iostream>
 #include <fstream>
-#include <string>
-#include <sstream>
 
 #define GLEW_STATIC
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
+#include "GL/glew.h"
+#include "GLFW/glfw3.h"
 
 #include "core/Renderer.h"
-#include "core/VertexBuffer.h"
-#include "core/VertexBufferLayout.h"
-#include "core/IndexBuffer.h"
-#include "core/VertexArray.h"
 #include "core/Shader.h"
-#include "core/Texture.h"
-
-#include "deps/glm/glm.hpp"
-#include "deps/glm/gtc/matrix_transform.hpp"
 
 #include "deps/imgui/imgui.h"
 #include "deps/imgui/imgui_impl_glfw.h"
@@ -33,16 +23,13 @@ int main(void)
 {
     GLFWwindow* window;
 
-    /* Initialize the library */
     if (!glfwInit())
         return -1;
 
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    // Withouth it, I'm using compatible version
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    /* Create a windowed mode window and its OpenGL context */
     window = glfwCreateWindow(960, 540, "Hello World", NULL, NULL);
     if (!window)
     {
@@ -50,7 +37,6 @@ int main(void)
         return -1;
     }
 
-    /* Make the window's context current */
     glfwMakeContextCurrent(window);
 
     // Instead of drawing our frames the moment they are ready
@@ -59,7 +45,6 @@ int main(void)
     // it waits for the refresh rate to end and then use the new frame
     glfwSwapInterval(1);
 
-    // You can initialize GLEW only after creating a valid OpenGL context(see just above)
     if (glewInit() != GLEW_OK)
     {
         std::cout << "Error: failed to initialize GLEW(did you previously create a valid OpenGL context ?)!" << std::endl;
@@ -79,7 +64,6 @@ int main(void)
         Renderer renderer;
 
         //----- IMGUI SETUP -----//
-		// GL 3.0 + GLSL 130
 		const char* glsl_version = "#version 130";
 
 		IMGUI_CHECKVERSION();
@@ -138,7 +122,6 @@ int main(void)
             delete testMenu;
     }
 
-    // Cleanup
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();

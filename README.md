@@ -3,28 +3,18 @@ The current repo structure is fairly simple:
 - `res` folder contains shader source files and texture files
 - `src/core` folder contains the main code needed to create a simple application
 - `src/deps` folder contains some external dependencies (libraries, headers, ...) needed for building an application
-- `src/tests` folder contains personal experiments to test graphics concepts
+- `src/tests` folder contains personal experiments 
 
 ### How to build
 
-**IMPORTANT**: I tested this only on Windows 10 with Visual Studio 2019.  
-An application with this code requires:
+A Visual Studio 2022 solution for Windows 10 x64 is provided with the needed dependencies (headers, sources and libraries):
 
-- OpenGL 3.3, GLSL 1.3
-- [GLEW](http://glew.sourceforge.net/index.html "GLEW") >= 2.1.0 (header files and static library)
-- [GLFW](https://www.glfw.org/download "GLFW") >= 3.3.4 (header files and static library)
+- GLEW (OpenGL loading library), GLFW (cross-platform window and input handling)
+- GLM (math library, GLSL compliant)
+- IMGUI (Immediate UI) 
+- stb_image (image handling)
 
-Add to the compiler include directories:
-- The GLEW and GLFW header files folders
-- The `src\deps` folder
-
-Add to the compiler library directories:
-- The GLEW and GLFW static libraries folders
-
-Add to the linker input files the libraries:
-- `opengl32, glfw3, glew32s`
-
-The application will search the shaders and textures inside the `res` folder from the current working directory: if the application crashes, try to set the working directory to where you cloned the repository (for example, I have set my working directory in Visual Studio to `$(ProjectDir)\repo` where `repo` is where I have cloned this repository); otherwise, copy the `res` folder in your current working directory.
+Using OpenGL 3.3, GLSL 3.3 .
 
 ### Results
 - Smooth Bezier curve: you can move the control points to change the curve shape or increase/decrease the number of points used for the curve  

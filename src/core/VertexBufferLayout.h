@@ -2,13 +2,18 @@
 
 #include <vector>
 
-#include <GL/glew.h>
+#include "GL/glew.h"
 
 #include "Renderer.h"
 
+// USE ONLY INTERNALLY //
+namespace HelperCondition
+{
+	template <typename T>
+	constexpr bool alwaysFalse = false;
+}
+
 // Describes a single attribute of a vertex buffer.
-// It saves the type of the values used to represent the attribute, the number of values used for the attribute
-// and if those values have to be normalized.
 struct VertexBufferElement
 {
 	unsigned int type;
@@ -31,9 +36,7 @@ struct VertexBufferElement
 };
 
 
-// Describes the layout of a buffer that stores vertices informations as a vector of elements (attributes)
-// where each element has its own "layout" i.e. how many values it has, what type they are and if they have to be normalized.
-// It also stores the stride of the entire vertex i.e. how many bytes have to be jumped to reach the next vertex position in the buffer.
+// Describes the layout of a buffer that stores vertices informations as a vector of elements (attributes).
 class VertexBufferLayout
 {
 private:
@@ -46,7 +49,10 @@ public:
 	template <typename T>
 	void AddAttrib(unsigned int count)
 	{
-		static_assert(false);
+		// static_assert is checked prior template instantiation:
+		// a workaround is to make the condition dependent on the type
+		// so the compiler needs to wait until the instantiation is performed.
+		static_assert(HelperCondition::alwaysFalse<T>);
 	}
 
 	template <>

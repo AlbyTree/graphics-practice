@@ -1,6 +1,6 @@
 #include "TestClearColor.h"
-#include "../core/Renderer.h"
-#include "../deps/imgui/imgui.h"
+#include "core/Renderer.h"
+#include "deps/imgui/imgui.h"
 
 namespace test
 {

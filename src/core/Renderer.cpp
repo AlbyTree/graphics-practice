@@ -35,7 +35,5 @@ void Renderer::Draw(const VertexArray& va, const IndexBuffer& ib, const Shader& 
     va.Bind();
     ib.Bind();
 
-	// It draws what's bound to GL_ELEMENT_ARRAY_BUFFER
-	// otherwise I have to specify a pointer to an indices buffer
 	GLCall(glDrawElements(prim, ib.GetCount(), GL_UNSIGNED_INT, nullptr));
 }
