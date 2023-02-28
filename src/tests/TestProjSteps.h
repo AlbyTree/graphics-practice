@@ -4,8 +4,8 @@
 
 #include "Test.h"
 
-#include "../core/VertexBuffer.h"
-#include "../core/Texture.h"
+#include "core/VertexBuffer.h"
+#include "core/Texture.h"
 
 namespace test
 {

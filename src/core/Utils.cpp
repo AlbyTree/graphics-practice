@@ -1,6 +1,6 @@
 #include "Utils.h"
 #include <vector>
-#include "../deps/glm/glm.hpp"
+#include "glm/glm.hpp"
 
 glm::mat3 compgraphutils::CreateTrianglePositions()
 {

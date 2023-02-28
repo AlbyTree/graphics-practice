@@ -8,8 +8,6 @@
 #include "core/Renderer.h"
 #include "core/Shader.h"
 
-#include "deps/glm/glm.hpp"
-
 #include "deps/imgui/imgui.h"
 #include "deps/imgui/imgui_impl_glfw.h"
 #include "deps/imgui/imgui_impl_opengl3.h"

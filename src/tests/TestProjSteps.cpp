@@ -1,12 +1,12 @@
 #include "TestProjSteps.h"
-#include "../core/VertexBufferLayout.h"
-#include "../core/Renderer.h"
-#include "../core/Utils.h"
+#include "core/VertexBufferLayout.h"
+#include "core/Renderer.h"
+#include "core/Utils.h"
 
-#include "../deps/imgui/imgui.h"
-#include "../deps/glm/glm.hpp"
-#include "../deps/glm/gtc/matrix_transform.hpp"
-#include "../deps/glm/gtc/type_ptr.hpp"
+#include "deps/imgui/imgui.h"
+#include "deps/glm/glm.hpp"
+#include "deps/glm/gtc/matrix_transform.hpp"
+#include "deps/glm/gtc/type_ptr.hpp"
 
 namespace test
 {
