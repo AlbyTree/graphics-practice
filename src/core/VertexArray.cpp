@@ -34,12 +34,11 @@ void VertexArray::AddBuffer(const VertexBuffer& vb, const VertexBufferLayout& la
 	{
 		const auto& element = elements[i];
 		GLCall(glEnableVertexAttribArray(i));
-		// Specifichiamo come costruire l'array di indici e come sono fatti gli attributi di un vertex.
-		// 1 param: numero(indice) dell'attributo
-		// 2 param: quanti elementi descrivono l'attributo
-		// 3 param: se normalizzare i valori
-		// 4 param: quanti byte devi muoverti per raggiungere il prossimo vertice
-		// 5 param: quanti byte devi muoverti per raggiungere il prossimo attributo di un vertice
+		// 1 param: index of the attribute
+		// 2 param: how many elements the attribute has
+		// 3 param: if elements need to be normalizd
+		// 4 param: how many bytes to jump to reach next vertex
+		// 5 param: how many bytes to jump to reach next vertex attribute
 		GLCall(glVertexAttribPointer(i, element.count, element.type,
 			element.normalized, layout.GetStride(), (const void*)offset));
 		offset += element.count * VertexBufferElement::GetSizeOfType(element.type);
