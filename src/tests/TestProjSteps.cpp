@@ -1,4 +1,5 @@
 #include "TestProjSteps.h"
+#include "../core/VertexBufferLayout.h"
 #include "../core/Renderer.h"
 #include "../core/Utils.h"
 
