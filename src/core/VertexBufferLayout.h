@@ -2,9 +2,16 @@
 
 #include <vector>
 
-#include <GL/glew.h>
+#include "GL/glew.h"
 
 #include "Renderer.h"
+
+// USE ONLY INTERNALLY //
+namespace HelperCondition
+{
+	template <typename T>
+	constexpr bool alwaysFalse = false;
+}
 
 // Describes a single attribute of a vertex buffer.
 struct VertexBufferElement
@@ -42,7 +49,10 @@ public:
 	template <typename T>
 	void AddAttrib(unsigned int count)
 	{
-		static_assert(false);
+		// static_assert is checked prior template instantiation:
+		// a workaround is to make the condition dependent on the type
+		// so the compiler needs to wait until the instantiation is performed.
+		static_assert(HelperCondition::alwaysFalse<T>);
 	}
 
 	template <>

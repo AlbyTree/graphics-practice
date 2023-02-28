@@ -1,22 +1,12 @@
 #include <iostream>
 #include <fstream>
-#include <string>
-#include <sstream>
 
 #define GLEW_STATIC
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
+#include "GL/glew.h"
+#include "GLFW/glfw3.h"
 
 #include "core/Renderer.h"
-#include "core/VertexBuffer.h"
-#include "core/VertexBufferLayout.h"
-#include "core/IndexBuffer.h"
-#include "core/VertexArray.h"
 #include "core/Shader.h"
-#include "core/Texture.h"
-
-#include "deps/glm/glm.hpp"
-#include "deps/glm/gtc/matrix_transform.hpp"
 
 #include "deps/imgui/imgui.h"
 #include "deps/imgui/imgui_impl_glfw.h"

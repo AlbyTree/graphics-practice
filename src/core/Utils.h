@@ -3,7 +3,7 @@
 // The projection matrices and formulas were taken from http://www.songho.ca/opengl/gl_projectionmatrix.html
 
 #include <vector>
-#include "../deps/glm/glm.hpp"
+#include "glm/glm.hpp"
 
 namespace compgraphutils
 {

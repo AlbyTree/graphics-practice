@@ -1,6 +1,6 @@
 #include "Test.h"
 
-#include "../deps/imgui/imgui.h"
+#include "deps/imgui/imgui.h"
 
 namespace test
 {
