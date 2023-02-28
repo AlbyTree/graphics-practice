@@ -1,5 +1,3 @@
-// The projection matrices and formulas are from http://www.songho.ca/opengl/gl_projectionmatrix.html
-
 #include "Utils.h"
 #include <vector>
 #include "../deps/glm/glm.hpp"
@@ -93,13 +91,11 @@ void compgraphutils::generateCurvePointsBez(int numCurvePoints, const glm::vec3*
 	{
 		float t = i / (float)numSegments;
 
-		// Compute coefficients
 		float k1 = (1 - t) * (1 - t) * (1 - t);
 		float k2 = 3 * (1 - t) * (1 - t) * t;
 		float k3 = 3 * (1 - t) * t * t;
 		float k4 = t * t * t;
 
-		// Weight the four control points using coefficients
 		curvePoints[i] = ((CPS[0] * k1 + CPS[1] * k2 + CPS[2] * k3 + CPS[3] * k4));
 	}
 }

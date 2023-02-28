@@ -20,25 +20,21 @@
 	#define GLCall(x) x
 #endif
 
-// Primitives allowed are: TRIANGLES, POINTS .
 enum Primitive { TRIANGLES = GL_TRIANGLES, POINTS = GL_POINTS, LINE_STRIP = GL_LINE_STRIP, LINES = GL_LINES };
 
 // Clear all the OpenGL context errors flags.
 void GLClearError();
+
 // Tries to execute an OpenGL function: if the function execution produced errors,
 // it prints the errors codes, the file and the line in the file of the instruction that caused the error.
 // Returns false is errors occured, true otherwise.
 bool GLLogCall(const char* function, const char* file, int line);
 
-// Describes a simple renderer: draws triangles vertices using the order dictated by the indices in the index buffer
-// with the vertices properties stored into a vertex array and a shader program.
-// It doesn't take care of uniforms so they must be set outside the renderer draw call.
 class Renderer
 {
 private:
 
 public:
 	void Clear() const;
-	// See the definition of the Primitive type to know what kind of primitives are allowed.
 	void Draw(const VertexArray& va, const IndexBuffer& ib, const Shader& shader, Primitive prim = TRIANGLES) const;
 };

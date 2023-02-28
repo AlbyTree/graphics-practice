@@ -7,8 +7,6 @@
 #include "Renderer.h"
 
 // Describes a single attribute of a vertex buffer.
-// It saves the type of the values used to represent the attribute, the number of values used for the attribute
-// and if those values have to be normalized.
 struct VertexBufferElement
 {
 	unsigned int type;
@@ -31,9 +29,7 @@ struct VertexBufferElement
 };
 
 
-// Describes the layout of a buffer that stores vertices informations as a vector of elements (attributes)
-// where each element has its own "layout" i.e. how many values it has, what type they are and if they have to be normalized.
-// It also stores the stride of the entire vertex i.e. how many bytes have to be jumped to reach the next vertex position in the buffer.
+// Describes the layout of a buffer that stores vertices informations as a vector of elements (attributes).
 class VertexBufferLayout
 {
 private:
