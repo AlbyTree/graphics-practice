@@ -11,7 +11,6 @@ class Texture
 private:
 	unsigned int m_RendererID;
 	std::string m_FilePath;
-	// Buffer that stores the loaded image on the CPU side.
 	unsigned char* m_LocalBuffer;
 	int m_Width, m_Height;
 	// Bytes per pixel (for RGB we would use 3 bytes, 1 for Red, 1 for Green and 1 for Blue).

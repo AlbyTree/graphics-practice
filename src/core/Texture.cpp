@@ -20,12 +20,9 @@ Texture::Texture(const std::string& path)
 	GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
 
 	GLCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_Width, m_Height, 0, GL_RGBA, GL_UNSIGNED_BYTE, m_LocalBuffer));
-	// We got the texture on the GPU, we don't need it on the CPU anymore.
 	GLCall(glBindTexture(GL_TEXTURE_2D, 0));
 
-	// If the buffer has a texture...
 	if (m_LocalBuffer)
-		// We've already sent the texture, we don't need it anymore on the CPU side.
 		stbi_image_free(m_LocalBuffer);
 }
 
