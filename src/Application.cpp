@@ -1,3 +1,4 @@
+#pragma region INCLUDES
 #include <iostream>
 #include <fstream>
 
@@ -18,9 +19,11 @@
 #include "tests/TestProjSteps.h"
 #include "tests/TestSendDataLater.h"
 #include "tests/TestBezCurve.h"
+#pragma endregion
 
 int main(void)
 {
+#pragma region SETUP
     GLFWwindow* window;
 
     if (!glfwInit())
@@ -81,6 +84,7 @@ int main(void)
         test::Test* currentTest = nullptr;
         test::TestMenu* testMenu = new test::TestMenu(currentTest);
         currentTest = testMenu;
+#pragma endregion
 
         testMenu->RegisterTest<test::TestClearColor>("Clear Color");
         testMenu->RegisterTest<test::TestTexture2D>("Texture 2D");
@@ -88,6 +92,7 @@ int main(void)
         testMenu->RegisterTest<test::TestSendDataLater>("Send Data Later");
         testMenu->RegisterTest<test::TestBezCurve>("Bezier Curve");
 
+#pragma region GAME_LOOP
         while (!glfwWindowShouldClose(window))
         {
             GLCall(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
@@ -121,6 +126,7 @@ int main(void)
         if (currentTest != testMenu)
             delete testMenu;
     }
+#pragma endregion
 
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
