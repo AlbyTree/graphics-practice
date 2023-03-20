@@ -3,6 +3,8 @@
 #include <vector>
 #include <functional>
 #include <iostream>
+#include "deps/GL/glew.h"
+#include "deps/GLFW/glfw3.h"
 
 namespace test
 {
@@ -29,6 +31,13 @@ namespace test
 		{
 			std::cout << "Registering test " << name << std::endl;
 			m_Tests.push_back(std::make_pair(name, []() { return new T(); }));
+		}
+		
+		template <typename T>
+		void RegisterTest(const std::string& name, GLFWwindow* window)
+		{
+			std::cout << "Registering test " << name << std::endl;
+			m_Tests.push_back(std::make_pair(name, [window]() { return new T(window); }));
 		}
 	
 	private:
