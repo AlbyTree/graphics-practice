@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\core\IndexBuffer.cpp" />
+    <ClCompile Include="src\core\Mesh.cpp" />
     <ClCompile Include="src\core\Renderer.cpp" />
     <ClCompile Include="src\core\Shader.cpp" />
     <ClCompile Include="src\core\Texture.cpp" />
@@ -39,12 +40,14 @@
     <ClCompile Include="src\tests\Test.cpp" />
     <ClCompile Include="src\tests\TestBezCurve.cpp" />
     <ClCompile Include="src\tests\TestClearColor.cpp" />
+    <ClCompile Include="src\tests\TestMesh.cpp" />
     <ClCompile Include="src\tests\TestProjSteps.cpp" />
     <ClCompile Include="src\tests\TestSendDataLater.cpp" />
     <ClCompile Include="src\tests\TestTexture2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\core\IndexBuffer.h" />
+    <ClInclude Include="src\core\Mesh.h" />
     <ClInclude Include="src\core\Renderer.h" />
     <ClInclude Include="src\core\Shader.h" />
     <ClInclude Include="src\core\Texture.h" />
@@ -488,6 +491,7 @@
     <ClInclude Include="src\tests\Test.h" />
     <ClInclude Include="src\tests\TestBezCurve.h" />
     <ClInclude Include="src\tests\TestClearColor.h" />
+    <ClInclude Include="src\tests\TestMesh.h" />
     <ClInclude Include="src\tests\TestProjSteps.h" />
     <ClInclude Include="src\tests\TestSendDataLater.h" />
     <ClInclude Include="src\tests\TestTexture2D.h" />
@@ -495,6 +499,7 @@
   <ItemGroup>
     <Content Include="res\shaders\Basic.shader" />
     <Content Include="res\shaders\BezCurve.shader" />
+    <Content Include="res\shaders\Default.shader" />
     <Content Include="res\shaders\ProjSteps.shader" />
     <Content Include="res\shaders\SendDataLater.shader" />
     <Content Include="res\textures\ChernoLogo.png" />
