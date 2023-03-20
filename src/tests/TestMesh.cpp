@@ -1,9 +1,8 @@
 ﻿#include "TestMesh.h"
 
-#include "glm/ext/matrix_clip_space.hpp"
 #include "core/Renderer.h"
 #include "glm/ext/matrix_transform.hpp"
-#include "glm/gtx/matrix_decompose.inl"
+#include "glm/ext/matrix_clip_space.hpp"
 
 test::TestMesh::TestMesh()
 {
