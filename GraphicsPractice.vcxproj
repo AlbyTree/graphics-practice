@@ -41,6 +41,7 @@
     <ClCompile Include="src\tests\TestBezCurve.cpp" />
     <ClCompile Include="src\tests\TestClearColor.cpp" />
     <ClCompile Include="src\tests\TestMesh.cpp" />
+    <ClCompile Include="src\tests\TestPoints.cpp" />
     <ClCompile Include="src\tests\TestProjSteps.cpp" />
     <ClCompile Include="src\tests\TestSendDataLater.cpp" />
     <ClCompile Include="src\tests\TestTexture2D.cpp" />
@@ -492,6 +493,7 @@
     <ClInclude Include="src\tests\TestBezCurve.h" />
     <ClInclude Include="src\tests\TestClearColor.h" />
     <ClInclude Include="src\tests\TestMesh.h" />
+    <ClInclude Include="src\tests\TestPoints.h" />
     <ClInclude Include="src\tests\TestProjSteps.h" />
     <ClInclude Include="src\tests\TestSendDataLater.h" />
     <ClInclude Include="src\tests\TestTexture2D.h" />

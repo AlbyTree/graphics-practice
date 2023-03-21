@@ -20,6 +20,7 @@
 #include "tests/TestSendDataLater.h"
 #include "tests/TestBezCurve.h"
 #include "tests/TestMesh.h"
+#include "tests/TestPoints.h"
 #pragma endregion
 
 int main(void)
@@ -93,6 +94,7 @@ int main(void)
         testMenu->RegisterTest<test::TestSendDataLater>("Send Data Later");
         testMenu->RegisterTest<test::TestBezCurve>("Bezier Curve");
         testMenu->RegisterTest<test::TestMesh>("Mesh Test");
+        testMenu->RegisterTest<test::TestPoints>("Points Test", window);
 
 #pragma region GAME_LOOP
         while (!glfwWindowShouldClose(window))
