@@ -3,7 +3,6 @@
 #include "core/Renderer.h"
 #include "glm/ext/matrix_transform.hpp"
 #include "glm/ext/matrix_clip_space.hpp"
-#include <iostream>
 
 test::TestPoints::TestPoints()
 {
@@ -31,7 +30,7 @@ void test::TestPoints::Initialize(GLFWwindow* window) noexcept
         [](GLFWwindow* window, int button, int action, int mods)
         {
             if (glfwGetWindowUserPointer(window))
-                static_cast<TestPoints*>(glfwGetWindowUserPointer(window))->OnMouseLeftClick(window, button, action, mods);
+                static_cast<TestPoints*>(glfwGetWindowUserPointer(window))->OnMouseButton(window, button, action, mods);
         });
     
     std::vector<MeshData> data = {
@@ -71,6 +70,9 @@ void test::TestPoints::OnRenderer()
     m_Shader->Unbind();
 }
 
-void test::TestPoints::OnMouseLeftClick(GLFWwindow* window, int button, int action, int mode)
+void test::TestPoints::OnMouseButton(GLFWwindow* window, int button, int action, int mode)
 {
+    if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
+    {
+    }
 }

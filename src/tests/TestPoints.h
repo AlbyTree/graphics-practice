@@ -17,7 +17,7 @@ namespace test
         void Initialize(GLFWwindow* window) noexcept;
 
         void OnRenderer() override;
-        void OnMouseLeftClick(GLFWwindow* window, int button, int action, int mode);
+        void OnMouseButton(GLFWwindow* window, int button, int action, int mode);
 
     private:
         GLFWwindow* m_Window;
