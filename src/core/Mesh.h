@@ -24,8 +24,11 @@ public:
     Mesh();
     ~Mesh() = default;
 
+    std::vector<glm::vec3> GetPositions();
+    inline unsigned int GetNumVertices() const { return m_Data.size(); };
     void SetVertices(std::vector<MeshData>&& data);
     void SetIndices(std::vector<unsigned int>&& indices);
+    void SetVertexColor(unsigned int index, const glm::vec4& c);
 
     inline const VertexArray& GetVAO() const { return *m_VAO; }
     inline const IndexBuffer& GetIB() const { return *m_IB; }
