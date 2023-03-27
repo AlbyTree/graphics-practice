@@ -2,15 +2,21 @@
 #include <vector>
 #include "glm/glm.hpp"
 
-bool compgraphutils::RayCast(const Ray& ray, const AABS& aabs, float& t)
+bool compgraphutils::RayCast(const Ray& ray, const AABB& aabb, float& t)
 {
-    float tMinX = (aabs.min.x - ray.position.x) / ray.direction.x;
-    float tMaxX = (aabs.max.x - ray.position.x) / ray.direction.x;
-    float tMinY = (aabs.min.y - ray.position.y) / ray.direction.y;
-    float tMaxY = (aabs.max.y - ray.position.y) / ray.direction.y;
+    float tMinX = (aabb.min.x - ray.position.x) / ray.direction.x;
+    float tMaxX = (aabb.max.x - ray.position.x) / ray.direction.x;
+    float tMinY = (aabb.min.y - ray.position.y) / ray.direction.y;
+    float tMaxY = (aabb.max.y - ray.position.y) / ray.direction.y;
+    float tMinZ = (aabb.min.z - ray.position.z) / ray.direction.z;
+    float tMaxZ = (aabb.max.z - ray.position.z) / ray.direction.z;
 
-    float tMaxMin = std::max(std::min(tMinX, tMaxX), std::min(tMinY, tMaxY));
-    float tMinMax = std::min(std::max(tMinX, tMaxX), std::max(tMinY, tMaxY));
+    float tMaxMin = std::max(
+    	std::max(std::min(tMinX, tMaxX), std::min(tMinY, tMaxY)),
+    	std::min(tMinZ, tMaxZ));
+    float tMinMax = std::min(
+    	std::min(std::max(tMinX, tMaxX), std::max(tMinY, tMaxY)),
+    	std::max(tMinZ, tMaxZ));
 
     // if tmax < 0, ray (line) is intersecting AABB, but whole AABB is behing us
     if (tMinMax < 0.f) {
@@ -32,19 +38,19 @@ bool compgraphutils::RayCast(const Ray& ray, const AABS& aabs, float& t)
     return true;
 }
 
-float compgraphutils::RayCast(const Ray& ray, const AABS& aabs)
+float compgraphutils::RayCast(const Ray& ray, const AABB& aabb)
 {
     float t = -1.f;
-    if (!RayCast(ray, aabs, t)) {
+    if (!RayCast(ray, aabb, t)) {
         return -1.f;
     }
     return t;
 }
 
-bool compgraphutils::RayCast(const Ray& ray, const AABS& aabs, glm::vec3& point)
+bool compgraphutils::RayCast(const Ray& ray, const AABB& aabb, glm::vec3& point)
 {
     float t = -1.f;
-    bool result = RayCast(ray, aabs, t);
+    bool result = RayCast(ray, aabb, t);
     point = glm::vec3(ray.position + ray.direction * t);
     return result;
 }
