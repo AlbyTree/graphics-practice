@@ -2,6 +2,53 @@
 #include <vector>
 #include "glm/glm.hpp"
 
+bool compgraphutils::RayCast(const Ray& ray, const AABS& aabs, float& t)
+{
+    float tMinX = (aabs.min.x - ray.position.x) / ray.direction.x;
+    float tMaxX = (aabs.max.x - ray.position.x) / ray.direction.x;
+    float tMinY = (aabs.min.y - ray.position.y) / ray.direction.y;
+    float tMaxY = (aabs.max.y - ray.position.y) / ray.direction.y;
+
+    float tMaxMin = std::max(std::min(tMinX, tMaxX), std::min(tMinY, tMaxY));
+    float tMinMax = std::min(std::max(tMinX, tMaxX), std::max(tMinY, tMaxY));
+
+    // if tmax < 0, ray (line) is intersecting AABB, but whole AABB is behing us
+    if (tMinMax < 0.f) {
+        t = -1.f;
+        return false;
+    }
+
+    // if tmin > tmax, ray doesn't intersect AABB
+    if (tMaxMin > tMinMax) {
+        t = -1.f;
+        return false;
+    }
+
+    if (tMaxMin < 0.f) {
+        t = tMinMax;
+        return true;
+    }
+    t = tMaxMin;
+    return true;
+}
+
+float compgraphutils::RayCast(const Ray& ray, const AABS& aabs)
+{
+    float t = -1.f;
+    if (!RayCast(ray, aabs, t)) {
+        return -1.f;
+    }
+    return t;
+}
+
+bool compgraphutils::RayCast(const Ray& ray, const AABS& aabs, glm::vec3& point)
+{
+    float t = -1.f;
+    bool result = RayCast(ray, aabs, t);
+    point = glm::vec3(ray.position + ray.direction * t);
+    return result;
+}
+
 glm::mat3 compgraphutils::CreateTrianglePositions()
 {
 	glm::mat3 Triangle = {
