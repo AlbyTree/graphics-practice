@@ -7,12 +7,12 @@
 
 namespace compgraphutils
 {
-    struct AABS
+    struct AABB
     {
-        AABS() : min(-1,-1), max(1, 1) {}
-        AABS(const glm::vec3& point, const float ray) : min(point.x - ray, point.y - ray), max(point.x + ray, point.y + ray) {}
-        glm::vec2 min;
-        glm::vec2 max;
+        AABB() : min(-1, -1, -1), max(1, 1, 1) {}
+        AABB(const glm::vec3& point, const float ray) : min(point.x - ray, point.y - ray, point.z - ray), max(point.x + ray, point.y + ray, point.z + ray) {}
+        glm::vec3 min;
+        glm::vec3 max;
     };
 
     struct Ray
@@ -23,9 +23,9 @@ namespace compgraphutils
         glm::vec3 direction;
     };
 
-	float RayCast(const Ray& ray, const AABS& aabs);
-	bool RayCast(const Ray& ray, const AABS& aabs, float& t);
-	bool RayCast(const Ray& ray, const AABS& aabs, glm::vec3& point);
+	float RayCast(const Ray& ray, const AABB& aabb);
+	bool RayCast(const Ray& ray, const AABB& aabb, float& t);
+	bool RayCast(const Ray& ray, const AABB& aabb, glm::vec3& point);
 	
 	// Creates a 3x3 matrix containing a triangle vertices positions, counter-clockwise order, defined as
 	// V1 ( 1.0f , -1.0f, -1.0f)
