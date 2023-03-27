@@ -1,9 +1,14 @@
 ﻿#include "TestPoints.h"
 
 #include "core/Renderer.h"
+#include "core/Utils.h"
 #include "glm/ext/matrix_transform.hpp"
 #include "glm/ext/matrix_clip_space.hpp"
 #include "glm/ext/matrix_projection.hpp"
+#include "glm/gtx/normalize_dot.hpp"
+
+using compgraphutils::Ray;
+using compgraphutils::AABS;
 
 test::TestPoints::TestPoints()
 {
@@ -76,5 +81,46 @@ void test::TestPoints::OnMouseButton(GLFWwindow* window, int button, int action,
 {
     if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
     {
+        double xPos = -1, yPos = -1;
+        glfwGetCursorPos(window, &xPos, &yPos);
+        
+        glm::vec3 mousePointNear = glm::unProjectNO({xPos, yPos, -1.f}, m_View, m_Projection, m_Viewport);
+        glm::vec3 mousePointFar = glm::unProjectNO({xPos, yPos, 1.f}, m_View, m_Projection, m_Viewport);
+        Ray mouseRay(mousePointNear, mousePointFar - mousePointNear);
+        
+        std::vector<glm::vec3> worldMeshPositions;
+        for (const auto& pos : m_Mesh.GetPositions())
+        {
+            worldMeshPositions.push_back(m_Model * glm::vec4(pos.x, pos.y, pos.z, 1.f));
+        }
+        worldMeshPositions.resize(m_Mesh.GetNumVertices());
+        
+        
+        unsigned int i = 0;
+        int indexCloserVertex = -1;
+        float tCurrent = -1.f;
+        float tMin = 99.f;
+        float distCurrent = -1.f;
+        float distMin = 0.f;
+        for (const auto& meshPoint : worldMeshPositions)
+        {
+           AABS aabs(meshPoint, 5.f);
+           if (compgraphutils::RayCast(mouseRay, aabs, tCurrent))
+           {
+               auto hitPoint = glm::vec3(mouseRay.position + mouseRay.direction * tCurrent);
+               distCurrent = glm::length(meshPoint - hitPoint);
+               if (distCurrent <= distMin)
+               {
+                   indexCloserVertex = i;
+                   distMin = distCurrent;
+                   tMin = tCurrent;
+               }
+           }
+           i++; 
+        }
+        if (indexCloserVertex >= 0)
+        {
+            m_Mesh.SetVertexColor(indexCloserVertex, {0.2f, 0.3f, 0.5f, 1.f});
+        }
     }
 }
