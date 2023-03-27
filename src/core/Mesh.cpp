@@ -6,6 +6,19 @@ Mesh::Mesh()
 
 }
 
+std::vector<glm::vec3> Mesh::GetPositions()
+{
+    std::vector<glm::vec3> positions;
+    
+    for (const auto& vertexData : m_Data)
+    {
+        positions.push_back(vertexData.position);
+    }
+    positions.resize(m_Data.size());
+
+    return positions;
+}
+
 void Mesh::SetVertices(std::vector<MeshData>&& data)
 {
     m_Data = data;
@@ -22,5 +35,11 @@ void Mesh::SetIndices(std::vector<unsigned>&& indices)
 {
     m_Indices = indices;
     m_IB.reset(new IndexBuffer(m_Indices.data(), m_Indices.size()));
+}
+
+void Mesh::SetVertexColor(unsigned int index, const glm::vec4& c)
+{
+    m_Data[index].color = c;
+    m_VAO->ReplaceBufferData(m_Data.data(), m_Data.size() * sizeof(MeshData));
 }
 
