@@ -52,8 +52,8 @@ void test::TestPoints::Initialize(GLFWwindow* window) noexcept
     m_Shader = std::make_unique<Shader>("res/shaders/Default.shader");
     
     glm::vec3 modelScale(100);
-    m_Model = glm::scale(glm::mat4(1.f), modelScale);
-    m_View = glm::mat4(1.f);
+    glm::vec3 modelTrans(0,0,-5);
+    m_Model = glm::translate(glm::mat4(1.f), modelTrans) * glm::scale(glm::mat4(1.f), modelScale);
     m_View = glm::lookAt(glm::vec3(0,0,5), glm::vec3(0,0,0), glm::vec3(0,1,0));
     m_Projection = glm::ortho(-480.0f, 480.0f, -270.0f, 270.0f, 0.1f, 100.f);
     m_Viewport = glm::vec4(0.f, 0.f, 960.f, 540.f);
