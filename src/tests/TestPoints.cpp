@@ -8,7 +8,7 @@
 #include "glm/gtx/normalize_dot.hpp"
 
 using compgraphutils::Ray;
-using compgraphutils::AABS;
+using compgraphutils::AABB;
 
 test::TestPoints::TestPoints()
 {
@@ -83,9 +83,13 @@ void test::TestPoints::OnMouseButton(GLFWwindow* window, int button, int action,
     {
         double xPos = -1, yPos = -1;
         glfwGetCursorPos(window, &xPos, &yPos);
-        
-        glm::vec3 mousePointNear = glm::unProjectNO({xPos, yPos, -1.f}, m_View, m_Projection, m_Viewport);
-        glm::vec3 mousePointFar = glm::unProjectNO({xPos, yPos, 1.f}, m_View, m_Projection, m_Viewport);
+
+    	// OpenGL window depth goes from 0 (near plane) to 1 (far plane)
+        glm::vec3 mousePointNear = glm::unProject({xPos, yPos, 0.f}, m_View, m_Projection, m_Viewport);
+        glm::vec3 mousePointFar = glm::unProject({xPos, yPos, 1.f}, m_View, m_Projection, m_Viewport);
+    	// Window Y axis is opposite of world Y axis
+    	mousePointNear.y = -mousePointNear.y;
+    	mousePointFar.y = -mousePointFar.y;
         Ray mouseRay(mousePointNear, mousePointFar - mousePointNear);
         
         std::vector<glm::vec3> worldMeshPositions;
@@ -95,25 +99,25 @@ void test::TestPoints::OnMouseButton(GLFWwindow* window, int button, int action,
         }
         worldMeshPositions.resize(m_Mesh.GetNumVertices());
         
-        
         unsigned int i = 0;
         int indexCloserVertex = -1;
         float tCurrent = -1.f;
-        float tMin = 99.f;
         float distCurrent = -1.f;
-        float distMin = 0.f;
+        float distMin = std::numeric_limits<float>::max();
         for (const auto& meshPoint : worldMeshPositions)
         {
-           AABS aabs(meshPoint, 5.f);
-           if (compgraphutils::RayCast(mouseRay, aabs, tCurrent))
+			//TODO: AABB ray as class member and find heuristic value
+           AABB aabb(meshPoint, 5.f);
+           if (compgraphutils::RayCast(mouseRay, aabb, tCurrent))
            {
                auto hitPoint = glm::vec3(mouseRay.position + mouseRay.direction * tCurrent);
                distCurrent = glm::length(meshPoint - hitPoint);
+           		// If more points are close together,
+           		// select the closest one to the mouse
                if (distCurrent <= distMin)
                {
                    indexCloserVertex = i;
                    distMin = distCurrent;
-                   tMin = tCurrent;
                }
            }
            i++; 
