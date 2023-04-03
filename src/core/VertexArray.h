@@ -10,7 +10,9 @@ class VertexArray
 {
 private:
 	unsigned int m_RendererID;
+	//TODO: Remove this
 	VABufferState m_BufferState;
+	bool m_Init;
 public:
 	VertexArray();
 	~VertexArray();

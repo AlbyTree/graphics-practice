@@ -6,6 +6,7 @@ VertexArray::VertexArray()
 {
         GLCall(glGenVertexArrays(1, &m_RendererID));
 		m_BufferState = NO_BUFFER;
+		m_Init = false;
 }
 
 VertexArray::~VertexArray()
@@ -21,7 +22,6 @@ void VertexArray::Bind() const
 void VertexArray::Unbind()
 {
         GLCall(glBindVertexArray(0));
-		m_BufferState = NO_BUFFER;
 }
 
 void VertexArray::AddBuffer(const VertexBuffer& vb, const VertexBufferLayout& layout, bool isBufferInit)
@@ -46,13 +46,26 @@ void VertexArray::AddBuffer(const VertexBuffer& vb, const VertexBufferLayout& la
 		offset += element.count * VertexBufferElement::GetSizeOfType(element.type);
 	}
 	m_BufferState = (isBufferInit ? INIT_BUFFER : UNINIT_BUFFER);
+	m_Init = isBufferInit;
+	Unbind();
 }
 
 void VertexArray::ReplaceBufferData(const void* data, unsigned int size)
 {
-	GLCall(glBindVertexArray(m_RendererID));
-    GLCall(glBufferSubData(GL_ARRAY_BUFFER, 0, size, data));
+	Bind();
+	if (m_BufferState == UNINIT_BUFFER)
+	{}
+	if (!m_Init)
+	{
+		GLCall(glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW))
+		m_Init = true;
+	}
+	else
+	{
+		GLCall(glBufferSubData(GL_ARRAY_BUFFER, 0, size, data))
+	}
 	m_BufferState = INIT_BUFFER;
+	Unbind();
 }
 
 VABufferState VertexArray::GetBufferState() const
