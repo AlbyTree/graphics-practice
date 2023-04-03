@@ -11,6 +11,7 @@ namespace test
         TestMesh();
 
         void OnRenderer() override;
+    	void OnImGuiRenderer() override;
 
     private:
         Mesh m_Mesh;

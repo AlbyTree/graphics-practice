@@ -3,17 +3,17 @@
 #include "core/Renderer.h"
 #include "glm/ext/matrix_transform.hpp"
 #include "glm/ext/matrix_clip_space.hpp"
+#include "imgui/imgui.h"
 
 test::TestMesh::TestMesh()
 {
-    std::vector<MeshData> data = {
-        {{-1,0,0}},
-        {{0,1,0}},
-        {{1,0,0}, {1,0.5f,0.2f,1}}
-    };
-    
-    m_Mesh.SetVertices(std::move(data));
-    m_Mesh.SetIndices({0,2,1});
+	m_Mesh.AddPositions({{-1,0,0}, {0,1,0}, {1,0,0}});
+	m_Mesh.AddColor({1, 0.5f, 0.2f, 1.f});
+	m_Mesh.AddColor({});
+	m_Mesh.AddColor({});
+	m_Mesh.AddIndices({0,2,1});
+
+	m_Mesh.UpdateBuffers();
 
     m_Shader = std::make_unique<Shader>("res/shaders/Default.shader");
 }
@@ -37,4 +37,14 @@ void test::TestMesh::OnRenderer()
     r.Draw(m_Mesh.GetVAO(), m_Mesh.GetIB(), *m_Shader);
     
     m_Shader->Unbind();
+}
+
+void test::TestMesh::OnImGuiRenderer()
+{
+	if (ImGui::Button("Change Color"))
+	{
+		m_Mesh.SetVerticesColors({1}, {{0.2f, 0.2f, 0.2f, 1.f}});
+		m_Mesh.SetVertexPosition(1, {0,0.5,0});
+		m_Mesh.UpdateBuffers();
+	}
 }
