@@ -26,6 +26,7 @@ namespace compgraphutils
 	float RayCast(const Ray& ray, const AABB& aabb);
 	bool RayCast(const Ray& ray, const AABB& aabb, float& t);
 	bool RayCast(const Ray& ray, const AABB& aabb, glm::vec3& point);
+	int RayIntersects(const Ray& ray, const std::vector<glm::vec3>& positions);
 	
 	// Creates a 3x3 matrix containing a triangle vertices positions, counter-clockwise order, defined as
 	// V1 ( 1.0f , -1.0f, -1.0f)

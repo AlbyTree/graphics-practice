@@ -55,6 +55,34 @@ bool compgraphutils::RayCast(const Ray& ray, const AABB& aabb, glm::vec3& point)
     return result;
 }
 
+int compgraphutils::RayIntersects(const Ray& ray, const std::vector<glm::vec3>& positions)
+{
+	unsigned int i = 0;
+	int indexCloserVertex = -1;
+	float tCurrent = -1.f;
+	float distCurrent = -1.f;
+	float distMin = std::numeric_limits<float>::max();
+	for (const auto& meshPoint : positions)
+	{
+		AABB aabb(meshPoint, 5.f);
+		if (RayCast(ray, aabb, tCurrent))
+		{
+			auto hitPoint = glm::vec3(ray.position + ray.direction * tCurrent);
+			distCurrent = glm::length(meshPoint - hitPoint);
+			// If more points are close together,
+			// select the closest one to the mouse
+			if (distCurrent <= distMin)
+			{
+				indexCloserVertex = i;
+				distMin = distCurrent;
+			}
+		}
+		i++; 
+	}
+
+	return indexCloserVertex;
+}
+
 glm::mat3 compgraphutils::CreateTrianglePositions()
 {
 	glm::mat3 Triangle = {
