@@ -19,6 +19,7 @@ namespace test
 
         void OnRenderer() override;
         void OnMouseButton(GLFWwindow* window, int button, int action, int mode);
+        void OnCursorPosition(GLFWwindow* window, double xPos, double yPos);
 
     private:
         GLFWwindow* m_Window;
@@ -26,5 +27,9 @@ namespace test
         std::unique_ptr<Shader> m_Shader;
         glm::mat4 m_Model, m_View, m_Projection;
         glm::vec4 m_Viewport;
+
+		int indexSelectedVertex = -1;
+    	bool selected = false, drag = false, firstDrag = true;
+    	glm::vec3 mousePrev;
     };
 }

@@ -8,7 +8,7 @@
 #include "glm/gtx/normalize_dot.hpp"
 
 using compgraphutils::Ray;
-using compgraphutils::AABB;
+using compgraphutils::RayIntersects;
 
 test::TestPoints::TestPoints()
 {
@@ -38,16 +38,27 @@ void test::TestPoints::Initialize(GLFWwindow* window) noexcept
             if (glfwGetWindowUserPointer(window))
                 static_cast<TestPoints*>(glfwGetWindowUserPointer(window))->OnMouseButton(window, button, action, mods);
         });
+    glfwSetCursorPosCallback(m_Window,
+        [](GLFWwindow* window, double xpos, double ypos)
+        {
+            if (glfwGetWindowUserPointer(window))
+                static_cast<TestPoints*>(glfwGetWindowUserPointer(window))->OnCursorPosition(window, xpos, ypos);
+        });
     
-    std::vector<MeshData> data = {
-        {{-1,0,0}},
-        {{0,1,0}},
-        {{1,0,0}},
-        {{0,0,0}}
-    };
-    
-    m_Mesh.SetVertices(std::move(data));
-    m_Mesh.SetIndices({0,1,2,3});
+    m_Mesh.AddPositions({
+        {-1,0,0},
+        {0,1,0},
+        {1,0,0},
+        {0,0,0}});
+        
+	m_Mesh.AddColor({1,1,1,1});
+	m_Mesh.AddColor({1,1,1,1});
+	m_Mesh.AddColor({1,1,1,1});
+	m_Mesh.AddColor({1,1,1,1});
+	
+    m_Mesh.AddIndices({0,1,2,3});
+
+	m_Mesh.UpdateBuffers();
 
     m_Shader = std::make_unique<Shader>("res/shaders/Default.shader");
     
@@ -81,50 +92,87 @@ void test::TestPoints::OnMouseButton(GLFWwindow* window, int button, int action,
 {
     if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
     {
-        double xPos = -1, yPos = -1;
-        glfwGetCursorPos(window, &xPos, &yPos);
+    	if (!selected)
+    	{
+			double xPos = -1, yPos = -1;
+			glfwGetCursorPos(window, &xPos, &yPos);
 
-    	// OpenGL window depth goes from 0 (near plane) to 1 (far plane)
-        glm::vec3 mousePointNear = glm::unProject({xPos, yPos, 0.f}, m_View, m_Projection, m_Viewport);
-        glm::vec3 mousePointFar = glm::unProject({xPos, yPos, 1.f}, m_View, m_Projection, m_Viewport);
-    	// Window Y axis is opposite of world Y axis
-    	mousePointNear.y = -mousePointNear.y;
-    	mousePointFar.y = -mousePointFar.y;
-        Ray mouseRay(mousePointNear, mousePointFar - mousePointNear);
-        
-        std::vector<glm::vec3> worldMeshPositions;
-        for (const auto& pos : m_Mesh.GetPositions())
-        {
-            worldMeshPositions.push_back(m_Model * glm::vec4(pos.x, pos.y, pos.z, 1.f));
-        }
-        worldMeshPositions.resize(m_Mesh.GetNumVertices());
-        
-        unsigned int i = 0;
-        int indexCloserVertex = -1;
-        float tCurrent = -1.f;
-        float distCurrent = -1.f;
-        float distMin = std::numeric_limits<float>::max();
-        for (const auto& meshPoint : worldMeshPositions)
-        {
-			//TODO: AABB ray as class member and find heuristic value
-           AABB aabb(meshPoint, 5.f);
-           if (compgraphutils::RayCast(mouseRay, aabb, tCurrent))
-           {
-               auto hitPoint = glm::vec3(mouseRay.position + mouseRay.direction * tCurrent);
-               distCurrent = glm::length(meshPoint - hitPoint);
-           		// If more points are close together,
-           		// select the closest one to the mouse
-               if (distCurrent <= distMin)
-               {
-                   indexCloserVertex = i;
-                   distMin = distCurrent;
-               }
-           }
-           i++; 
-        }
-        if (indexCloserVertex >= 0)
-        {
-            m_Mesh.SetVertexColor(indexCloserVertex, {0.2f, 0.3f, 0.5f, 1.f});
-        }
+			// OpenGL window depth goes from 0 (near plane) to 1 (far plane)
+			glm::vec3 mousePointNear = glm::unProject({xPos, yPos, 0.f}, m_View, m_Projection, m_Viewport);
+			glm::vec3 mousePointFar = glm::unProject({xPos, yPos, 1.f}, m_View, m_Projection, m_Viewport);
+			// Window Y axis is opposite of world Y axis
+			mousePointNear.y = -mousePointNear.y;
+			mousePointFar.y = -mousePointFar.y;
+			Ray mouseRay(mousePointNear, mousePointFar - mousePointNear);
+			
+			std::vector<glm::vec3> worldMeshPositions;
+			for (const auto& pos : m_Mesh.GetPositions())
+			{
+				worldMeshPositions.push_back(m_Model * glm::vec4(pos.x, pos.y, pos.z, 1.f));
+			}
+			worldMeshPositions.resize(m_Mesh.GetNumVertices());
+			
+			indexSelectedVertex = RayIntersects(mouseRay, worldMeshPositions);
+			if (indexSelectedVertex >= 0)
+			{
+				m_Mesh.SetVertexColor(indexSelectedVertex, {0.2f, 0.3f, 0.5f, 1.f});
+				m_Mesh.UpdateBuffers();
+				selected = true;
+				drag = true;
+				mousePrev = glm::vec3(xPos, yPos, 1.f);
+			}
+    	}
     }
+    else if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE)
+    {
+		if (selected)
+		{
+			selected = false;
+			m_Mesh.SetVertexColor(indexSelectedVertex, {1.0f, 1.0f, 1.0f, 1.f});
+			m_Mesh.UpdateBuffers();
+			indexSelectedVertex = -1;
+			mousePrev = glm::vec3(0);
+		}
+    	if (drag)
+    	{
+    		drag = false;
+    		firstDrag = true;
+    	}
+    }
+}
+
+void test::TestPoints::OnCursorPosition(GLFWwindow* window, double xPos, double yPos)
+{
+	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
+	{
+		// Remember where the mouse was before dragging
+		static glm::vec3 mouseObjPrev(0);
+		if (selected && drag)
+		{
+			// Unproject prev mouse and current mouse in object space
+			if (firstDrag)
+			{
+				mouseObjPrev = glm::unProject(mousePrev, m_View * m_Model, m_Projection, m_Viewport);
+				// Window Y axis is opposite of world Y axis
+				mouseObjPrev.y = -mouseObjPrev.y;
+				firstDrag = false;
+			}
+			
+			glm::vec3 mouseObjCurr = glm::unProject({xPos, yPos, 1.f}, m_View * m_Model, m_Projection, m_Viewport);
+			// Window Y axis is opposite of world Y axis
+			mouseObjCurr.y = -mouseObjCurr.y;
+
+			// Find mouse delta in object space
+			glm::vec3 mouseDelta = mouseObjCurr - mouseObjPrev;
+
+			mouseObjPrev = mouseObjCurr;
+
+			//TODO: Find right,up vector (i.e. orientation) and apply delta in that directions
+			//TODO: Apply delta in world space, not in object space
+			// Apply delta to point
+			auto pos = m_Mesh.GetPositions()[indexSelectedVertex];
+			m_Mesh.SetVertexPosition(indexSelectedVertex, {pos.x + mouseDelta.x, pos.y + mouseDelta.y, pos.z});
+			m_Mesh.UpdateBuffers();
+		}
+	}
 }
